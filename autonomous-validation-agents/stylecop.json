@@ -1,0 +1,27 @@
+{
+  "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+  "settings": {
+    "documentationRules": {
+      "companyName": "Autonomous Validation Systems",
+      "copyrightText": "Copyright (c) {companyName}. All rights reserved.",
+      "xmlHeader": false,
+      "fileNamingConvention": "stylecop"
+    },
+    "orderingRules": {
+      "usingDirectivesPlacement": "outsideNamespace"
+    },
+    "namingRules": {
+      "allowedHungarianPrefixes": []
+    },
+    "maintainabilityRules": {
+      "topLevelTypes": ["class", "interface", "struct", "delegate", "enum"]
+    },
+    "layoutRules": {
+      "newlineAtEndOfFile": "allow",
+      "allowConsecutiveUsings": true
+    },
+    "readabilityRules": {
+      "allowBuiltInTypeAliases": true
+    }
+  }
+}

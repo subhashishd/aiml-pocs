@@ -1,0 +1,8 @@
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/tests/AutonomousValidation.Tests.Integration/bin/Debug/net9.0/.msCoverageSourceRootsMapping_AutonomousValidation.Tests.Integration
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/tests/AutonomousValidation.Tests.Integration/bin/Debug/net9.0/CoverletSourceRootsMapping_AutonomousValidation.Tests.Integration
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/tests/AutonomousValidation.Tests.Integration/obj/Debug/net9.0/AutonomousValidation.Tests.Integration.csproj.AssemblyReference.cache
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/tests/AutonomousValidation.Tests.Integration/obj/Debug/net9.0/MvcTestingAppManifest.json
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/tests/AutonomousValidation.Tests.Integration/obj/Debug/net9.0/AutonomousValidation.Tests.Integration.GeneratedMSBuildEditorConfig.editorconfig
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/tests/AutonomousValidation.Tests.Integration/obj/Debug/net9.0/AutonomousValidation.Tests.Integration.AssemblyInfoInputs.cache
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/tests/AutonomousValidation.Tests.Integration/obj/Debug/net9.0/AutonomousValidation.Tests.Integration.AssemblyInfo.cs
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/tests/AutonomousValidation.Tests.Integration/obj/Debug/net9.0/AutonomousValidation.Tests.Integration.csproj.CoreCompileInputs.cache

@@ -1,0 +1,47 @@
+# Docker Compose for Autonomous Validation Agents
+# Used for local development and integration testing
+
+version: '3.8'
+
+services:
+  orleans-silo:
+    build:
+      context: ../../
+      dockerfile: .azuredevops/docker/Dockerfile.silo
+      args:
+        BUILD_BUILDNUMBER: "local"
+        BUILD_SOURCEVERSION: "dev"
+    ports:
+      - "8080:8080"   # HTTP endpoint
+      - "11111:11111" # Orleans silo port
+      - "30000:30000" # Orleans gateway port
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ORLEANS_CLUSTERING_PROVIDER=Localhost
+      - LOGGING__LOGLEVEL__DEFAULT=Information
+      - LOGGING__LOGLEVEL__ORLEANS=Warning
+    networks:
+      - autonomous-validation
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    restart: unless-stopped
+
+  # Future services can be added here:
+  # - API Gateway
+  # - Monitoring (Prometheus, Grafana)
+  # - Database (if needed)
+  # - Message Queue (if needed)
+
+networks:
+  autonomous-validation:
+    driver: bridge
+    name: autonomous-validation-network
+
+volumes:
+  # Add persistent volumes as needed
+  app-data:
+    name: autonomous-validation-data

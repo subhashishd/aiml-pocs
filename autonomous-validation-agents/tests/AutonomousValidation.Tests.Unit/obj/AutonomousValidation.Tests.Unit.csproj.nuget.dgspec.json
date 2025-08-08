@@ -1,0 +1,507 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/tests/AutonomousValidation.Tests.Unit/AutonomousValidation.Tests.Unit.csproj": {}
+  },
+  "projects": {
+    "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/AutonomousValidation.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/AutonomousValidation.Core.csproj",
+        "projectName": "AutonomousValidation.Core",
+        "projectPath": "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/AutonomousValidation.Core.csproj",
+        "packagesPath": "/Users/subhashishdas/.nuget/packages/",
+        "outputPath": "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/subhashishdas/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "/opt/homebrew/Cellar/dotnet/9.0.7/libexec/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "allWarningsAsErrors": true,
+          "warnAsError": [
+            "NU1605"
+          ],
+          "warnNotAsError": [
+            "NU1701"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "AsyncFixer": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.6.0, )"
+            },
+            "ErrorProne.NET.CoreAnalyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[0.1.2, )"
+            },
+            "ErrorProne.NET.Structs": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[0.1.2, )"
+            },
+            "Microsoft.CodeAnalysis.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.3.4, )"
+            },
+            "Microsoft.CodeAnalysis.BannedApiAnalyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.3.4, )"
+            },
+            "Microsoft.CodeAnalysis.NetAnalyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.CodeAnalysis.PublicApiAnalyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.3.4, )"
+            },
+            "Microsoft.Orleans.Core": {
+              "target": "Package",
+              "version": "[8.2.0, )"
+            },
+            "Microsoft.Orleans.Serialization": {
+              "target": "Package",
+              "version": "[8.2.0, )"
+            },
+            "Microsoft.VisualStudio.Threading.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[17.8.14, )"
+            },
+            "SecurityCodeScan.VS2019": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.6.7, )"
+            },
+            "StyleCop.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.118, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/9.0.7/libexec/sdk/9.0.108/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Orleans/AutonomousValidation.Orleans.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Orleans/AutonomousValidation.Orleans.csproj",
+        "projectName": "AutonomousValidation.Orleans",
+        "projectPath": "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Orleans/AutonomousValidation.Orleans.csproj",
+        "packagesPath": "/Users/subhashishdas/.nuget/packages/",
+        "outputPath": "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Orleans/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/subhashishdas/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "/opt/homebrew/Cellar/dotnet/9.0.7/libexec/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/AutonomousValidation.Core.csproj": {
+                "projectPath": "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/AutonomousValidation.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "allWarningsAsErrors": true,
+          "warnAsError": [
+            "NU1605"
+          ],
+          "warnNotAsError": [
+            "NU1701"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "AsyncFixer": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.6.0, )"
+            },
+            "ErrorProne.NET.CoreAnalyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[0.1.2, )"
+            },
+            "ErrorProne.NET.Structs": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[0.1.2, )"
+            },
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.CodeAnalysis.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.3.4, )"
+            },
+            "Microsoft.CodeAnalysis.BannedApiAnalyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.3.4, )"
+            },
+            "Microsoft.CodeAnalysis.NetAnalyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.CodeAnalysis.PublicApiAnalyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.3.4, )"
+            },
+            "Microsoft.Extensions.Diagnostics.HealthChecks": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.ML.OnnxRuntime": {
+              "target": "Package",
+              "version": "[1.22.1, )"
+            },
+            "Microsoft.ML.Tokenizers": {
+              "target": "Package",
+              "version": "[1.0.2, )"
+            },
+            "Microsoft.Orleans.Server": {
+              "target": "Package",
+              "version": "[8.2.0, )"
+            },
+            "Microsoft.VisualStudio.Threading.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[17.8.14, )"
+            },
+            "OrleansDashboard": {
+              "target": "Package",
+              "version": "[8.2.0, )"
+            },
+            "SecurityCodeScan.VS2019": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.6.7, )"
+            },
+            "StyleCop.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.118, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.9.0, )"
+            },
+            "System.Diagnostics.PerformanceCounter": {
+              "target": "Package",
+              "version": "[9.0.7, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/9.0.7/libexec/sdk/9.0.108/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/tests/AutonomousValidation.Tests.Unit/AutonomousValidation.Tests.Unit.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/tests/AutonomousValidation.Tests.Unit/AutonomousValidation.Tests.Unit.csproj",
+        "projectName": "AutonomousValidation.Tests.Unit",
+        "projectPath": "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/tests/AutonomousValidation.Tests.Unit/AutonomousValidation.Tests.Unit.csproj",
+        "packagesPath": "/Users/subhashishdas/.nuget/packages/",
+        "outputPath": "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/tests/AutonomousValidation.Tests.Unit/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/subhashishdas/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "/opt/homebrew/Cellar/dotnet/9.0.7/libexec/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/AutonomousValidation.Core.csproj": {
+                "projectPath": "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/AutonomousValidation.Core.csproj"
+              },
+              "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Orleans/AutonomousValidation.Orleans.csproj": {
+                "projectPath": "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Orleans/AutonomousValidation.Orleans.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "allWarningsAsErrors": true,
+          "warnNotAsError": [
+            "NU1701"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "AsyncFixer": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.6.0, )"
+            },
+            "AutoFixture": {
+              "target": "Package",
+              "version": "[4.18.1, )"
+            },
+            "AutoFixture.Xunit2": {
+              "target": "Package",
+              "version": "[4.18.1, )"
+            },
+            "Bogus": {
+              "target": "Package",
+              "version": "[35.4.0, )"
+            },
+            "ErrorProne.NET.CoreAnalyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[0.1.2, )"
+            },
+            "ErrorProne.NET.Structs": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[0.1.2, )"
+            },
+            "FluentAssertions": {
+              "target": "Package",
+              "version": "[6.12.0, )"
+            },
+            "Microsoft.CodeAnalysis.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.3.4, )"
+            },
+            "Microsoft.CodeAnalysis.BannedApiAnalyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.3.4, )"
+            },
+            "Microsoft.CodeAnalysis.NetAnalyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.CodeAnalysis.PublicApiAnalyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.3.4, )"
+            },
+            "Microsoft.Extensions.Hosting.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.12.0, )"
+            },
+            "Microsoft.Orleans.Client": {
+              "target": "Package",
+              "version": "[8.2.0, )"
+            },
+            "Microsoft.Orleans.TestingHost": {
+              "target": "Package",
+              "version": "[8.2.0, )"
+            },
+            "Microsoft.VisualStudio.Threading.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[17.8.14, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.70, )"
+            },
+            "NBomber": {
+              "target": "Package",
+              "version": "[5.1.0, )"
+            },
+            "SecurityCodeScan.VS2019": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.6.7, )"
+            },
+            "StyleCop.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.118, )"
+            },
+            "Verify.Xunit": {
+              "target": "Package",
+              "version": "[22.11.4, )"
+            },
+            "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
+            "coverlet.msbuild": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.9.2, )"
+            },
+            "xunit.runner.visualstudio": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.8.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/9.0.7/libexec/sdk/9.0.108/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

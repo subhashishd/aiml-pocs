@@ -1,0 +1,315 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "HuggingFaceResearch/1.0.0": {
+        "dependencies": {
+          "AsyncFixer": "1.6.0",
+          "ErrorProne.NET.CoreAnalyzers": "0.1.2",
+          "ErrorProne.NET.Structs": "0.1.2",
+          "Microsoft.CodeAnalysis.Analyzers": "3.3.4",
+          "Microsoft.CodeAnalysis.BannedApiAnalyzers": "3.3.4",
+          "Microsoft.CodeAnalysis.NetAnalyzers": "8.0.0",
+          "Microsoft.CodeAnalysis.PublicApiAnalyzers": "3.3.4",
+          "Microsoft.ML.OnnxRuntime": "1.22.1",
+          "Microsoft.ML.Tokenizers": "1.0.2",
+          "Microsoft.VisualStudio.Threading.Analyzers": "17.8.14",
+          "SecurityCodeScan.VS2019": "5.6.7",
+          "StyleCop.Analyzers": "1.1.118"
+        },
+        "runtime": {
+          "HuggingFaceResearch.dll": {}
+        }
+      },
+      "AsyncFixer/1.6.0": {},
+      "ErrorProne.NET.CoreAnalyzers/0.1.2": {},
+      "ErrorProne.NET.Structs/0.1.2": {},
+      "Google.Protobuf/3.27.1": {
+        "runtime": {
+          "lib/net5.0/Google.Protobuf.dll": {
+            "assemblyVersion": "3.27.1.0",
+            "fileVersion": "3.27.1.0"
+          }
+        }
+      },
+      "Microsoft.CodeAnalysis.Analyzers/3.3.4": {},
+      "Microsoft.CodeAnalysis.BannedApiAnalyzers/3.3.4": {},
+      "Microsoft.CodeAnalysis.NetAnalyzers/8.0.0": {},
+      "Microsoft.CodeAnalysis.PublicApiAnalyzers/3.3.4": {},
+      "Microsoft.ML.OnnxRuntime/1.22.1": {
+        "dependencies": {
+          "Microsoft.ML.OnnxRuntime.Managed": "1.22.1"
+        },
+        "runtimeTargets": {
+          "runtimes/android/native/onnxruntime.aar": {
+            "rid": "android",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/ios/native/onnxruntime.xcframework.zip": {
+            "rid": "ios",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-arm64/native/libonnxruntime.so": {
+            "rid": "linux-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-arm64/native/libonnxruntime_providers_shared.so": {
+            "rid": "linux-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-x64/native/libonnxruntime.so": {
+            "rid": "linux-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-x64/native/libonnxruntime_providers_shared.so": {
+            "rid": "linux-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/osx-arm64/native/libonnxruntime.dylib": {
+            "rid": "osx-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/osx-x64/native/libonnxruntime.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-arm64/native/onnxruntime.dll": {
+            "rid": "win-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-arm64/native/onnxruntime.lib": {
+            "rid": "win-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-arm64/native/onnxruntime_providers_shared.dll": {
+            "rid": "win-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-arm64/native/onnxruntime_providers_shared.lib": {
+            "rid": "win-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/onnxruntime.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/onnxruntime.lib": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/onnxruntime_providers_shared.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/onnxruntime_providers_shared.lib": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/onnxruntime.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/onnxruntime.lib": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/onnxruntime_providers_shared.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/onnxruntime_providers_shared.lib": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Microsoft.ML.OnnxRuntime.Managed/1.22.1": {
+        "dependencies": {
+          "System.Memory": "4.5.5",
+          "System.Numerics.Tensors": "9.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.ML.OnnxRuntime.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Microsoft.ML.Tokenizers/1.0.2": {
+        "dependencies": {
+          "Google.Protobuf": "3.27.1",
+          "System.Text.Json": "8.0.5"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.ML.Tokenizers.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.225.12505"
+          }
+        }
+      },
+      "Microsoft.VisualStudio.Threading.Analyzers/17.8.14": {},
+      "SecurityCodeScan.VS2019/5.6.7": {},
+      "StyleCop.Analyzers/1.1.118": {},
+      "System.Memory/4.5.5": {},
+      "System.Numerics.Tensors/9.0.0": {
+        "runtime": {
+          "lib/net9.0/System.Numerics.Tensors.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.24.52809"
+          }
+        }
+      },
+      "System.Text.Json/8.0.5": {}
+    }
+  },
+  "libraries": {
+    "HuggingFaceResearch/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AsyncFixer/1.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/Xfs9H3UMfEv64cwT+C/JrTRp4w08BmPuFbj0ageadCHpx6rxYJxAU2C6sEqRFG22xmGk5cX9ewzoiiehWVHOw==",
+      "path": "asyncfixer/1.6.0",
+      "hashPath": "asyncfixer.1.6.0.nupkg.sha512"
+    },
+    "ErrorProne.NET.CoreAnalyzers/0.1.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RQdzUtFVhwLwisP2Du7Ugm7ldwAzc+QJrlZWNIwHXcgq4b5fLwZgdN1203RdYiHS8OOALophC6yWekxu3UgN2g==",
+      "path": "errorprone.net.coreanalyzers/0.1.2",
+      "hashPath": "errorprone.net.coreanalyzers.0.1.2.nupkg.sha512"
+    },
+    "ErrorProne.NET.Structs/0.1.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2AuzqxkREpl8kBt249CeR1sM70ZxBwm6nMcqi8tikisn5jD9jQW2ZNv8Q7PwHzxQYwTSmeRuua8vbPfClqXCzA==",
+      "path": "errorprone.net.structs/0.1.2",
+      "hashPath": "errorprone.net.structs.0.1.2.nupkg.sha512"
+    },
+    "Google.Protobuf/3.27.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7IVz9TzhYCZ8qY0rPhXUnyJSXYdshUqmmxmTI763XmDDSJJFnyfKH43FFcMJu/CZgBcE98xlFztrKwhzcRkiPg==",
+      "path": "google.protobuf/3.27.1",
+      "hashPath": "google.protobuf.3.27.1.nupkg.sha512"
+    },
+    "Microsoft.CodeAnalysis.Analyzers/3.3.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-AxkxcPR+rheX0SmvpLVIGLhOUXAKG56a64kV9VQZ4y9gR9ZmPXnqZvHJnmwLSwzrEP6junUF11vuc+aqo5r68g==",
+      "path": "microsoft.codeanalysis.analyzers/3.3.4",
+      "hashPath": "microsoft.codeanalysis.analyzers.3.3.4.nupkg.sha512"
+    },
+    "Microsoft.CodeAnalysis.BannedApiAnalyzers/3.3.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0k2Jwpc8eq0hjOtX6TxRkHm9clkJ2PAQ3heEHgqIJZcsfdFosC/iyz18nsgTVDDWpID80rC7aiYK7ripx+Qndg==",
+      "path": "microsoft.codeanalysis.bannedapianalyzers/3.3.4",
+      "hashPath": "microsoft.codeanalysis.bannedapianalyzers.3.3.4.nupkg.sha512"
+    },
+    "Microsoft.CodeAnalysis.NetAnalyzers/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-DxiTgkCl3CGq1rYmBX2wjY7XGbxiBdL4J+/AJIAFLKy5z70NxhnVRnPghnicXZ8oF6JKVXlW3xwznRbI3ioEKg==",
+      "path": "microsoft.codeanalysis.netanalyzers/8.0.0",
+      "hashPath": "microsoft.codeanalysis.netanalyzers.8.0.0.nupkg.sha512"
+    },
+    "Microsoft.CodeAnalysis.PublicApiAnalyzers/3.3.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kNLTfXtXUWDHVt5iaPkkiPuyHYlMgLI6SOFT4w88bfeI2vqSeGgHunFkdvlaCM8RDfcY0t2+jnesQtidRJJ/DA==",
+      "path": "microsoft.codeanalysis.publicapianalyzers/3.3.4",
+      "hashPath": "microsoft.codeanalysis.publicapianalyzers.3.3.4.nupkg.sha512"
+    },
+    "Microsoft.ML.OnnxRuntime/1.22.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-oKRyzajMIB18Z9gmC9CyDPgyo5Yu/ZYZ/w3mF6NwqC0YHOZisGytdAaK3fvUFLZ5XDRZTDzzr+Nqx/clRtdCcA==",
+      "path": "microsoft.ml.onnxruntime/1.22.1",
+      "hashPath": "microsoft.ml.onnxruntime.1.22.1.nupkg.sha512"
+    },
+    "Microsoft.ML.OnnxRuntime.Managed/1.22.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hYGYf0BaHiTfb623kD36pYpFN0rh2Znk3QS+ZWWxnTV6iDzl1KUJYaxf7/stz28r1w6HOqUqgWcT1nOYXuf8ew==",
+      "path": "microsoft.ml.onnxruntime.managed/1.22.1",
+      "hashPath": "microsoft.ml.onnxruntime.managed.1.22.1.nupkg.sha512"
+    },
+    "Microsoft.ML.Tokenizers/1.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-MefL5+IakSE/CWzx4BQQairgY1fXFBVTPtnn7/01Wngsk2248loViqQ1M5+YB8KBwbi0HjcfoMo86h+cSjiEOA==",
+      "path": "microsoft.ml.tokenizers/1.0.2",
+      "hashPath": "microsoft.ml.tokenizers.1.0.2.nupkg.sha512"
+    },
+    "Microsoft.VisualStudio.Threading.Analyzers/17.8.14": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/j6+pl6ckiOPAWZmhwugA/cXmu7cQ7Hx2xmf70sQcZLVWqKrjgdoE4Gww2dJXN1M3x4NLotnpiwBR2ryG2J+9w==",
+      "path": "microsoft.visualstudio.threading.analyzers/17.8.14",
+      "hashPath": "microsoft.visualstudio.threading.analyzers.17.8.14.nupkg.sha512"
+    },
+    "SecurityCodeScan.VS2019/5.6.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-WIE9RJswdSc2j+rLz2gW6U+gMUjMHzY2j7C/CL8/R2olXNM/+twarfMnWqm+rZodDBvaYDApJyxM8mVYf9FGrQ==",
+      "path": "securitycodescan.vs2019/5.6.7",
+      "hashPath": "securitycodescan.vs2019.5.6.7.nupkg.sha512"
+    },
+    "StyleCop.Analyzers/1.1.118": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Onx6ovGSqXSK07n/0eM3ZusiNdB6cIlJdabQhWGgJp3Vooy9AaLS/tigeybOJAobqbtggTamoWndz72JscZBvw==",
+      "path": "stylecop.analyzers/1.1.118",
+      "hashPath": "stylecop.analyzers.1.1.118.nupkg.sha512"
+    },
+    "System.Memory/4.5.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XIWiDvKPXaTveaB7HVganDlOCRoj03l+jrwNvcge/t8vhGYKvqV+dMv6G4SAX2NoNmN0wZfVPTAlFwZcZvVOUw==",
+      "path": "system.memory/4.5.5",
+      "hashPath": "system.memory.4.5.5.nupkg.sha512"
+    },
+    "System.Numerics.Tensors/9.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hyJB4UlpAi19Xr9AXzu2NuagKC4lPfHObNMEAA0HmqFz2rX7wKgzeYzO/jM/eBHDhnUGFFEjk5cOoJaxqg5J4A==",
+      "path": "system.numerics.tensors/9.0.0",
+      "hashPath": "system.numerics.tensors.9.0.0.nupkg.sha512"
+    },
+    "System.Text.Json/8.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0f1B50Ss7rqxXiaBJyzUu9bWFOO2/zSlifZ/UNMdiIpDYe4cY4LQQicP4nirK1OS31I43rn062UIJ1Q9bpmHpg==",
+      "path": "system.text.json/8.0.5",
+      "hashPath": "system.text.json.8.0.5.nupkg.sha512"
+    }
+  }
+}

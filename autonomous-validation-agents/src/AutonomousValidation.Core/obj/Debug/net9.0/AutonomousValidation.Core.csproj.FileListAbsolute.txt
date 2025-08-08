@@ -1,0 +1,14 @@
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/bin/Debug/net9.0/AutonomousValidation.Core.deps.json
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/bin/Debug/net9.0/AutonomousValidation.Core.dll
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/bin/Debug/net9.0/AutonomousValidation.Core.pdb
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/bin/Debug/net9.0/AutonomousValidation.Core.xml
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/obj/Debug/net9.0/AutonomousValidation.Core.csproj.AssemblyReference.cache
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/obj/Debug/net9.0/AutonomousValidation.Core.GeneratedMSBuildEditorConfig.editorconfig
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/obj/Debug/net9.0/AutonomousValidation.Core.AssemblyInfoInputs.cache
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/obj/Debug/net9.0/AutonomousValidation.Core.AssemblyInfo.cs
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/obj/Debug/net9.0/AutonomousValidation.Core.csproj.CoreCompileInputs.cache
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/obj/Debug/net9.0/AutonomousValidation.Core.dll
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/obj/Debug/net9.0/refint/AutonomousValidation.Core.dll
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/obj/Debug/net9.0/AutonomousValidation.Core.xml
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/obj/Debug/net9.0/AutonomousValidation.Core.pdb
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/src/AutonomousValidation.Core/obj/Debug/net9.0/ref/AutonomousValidation.Core.dll

@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <NoWarn>$(NoWarn);CA1002;CA1819;CA2227;RS0016;RS0017;RS0036;RS0037</NoWarn>
+    <_SkipUpgradeNetAnalyzersNuGetWarning>true</_SkipUpgradeNetAnalyzersNuGetWarning>
+    <EnableSourceLink>false</EnableSourceLink>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <EnableOrleansCodeGen>true</EnableOrleansCodeGen>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Orleans.Core" Version="8.2.0" />
+    <PackageReference Include="Microsoft.Orleans.Serialization" Version="8.2.0" />
+    <PackageReference Include="Microsoft.Orleans.Serialization.Abstractions" Version="8.2.0" />
+  </ItemGroup>
+
+</Project>

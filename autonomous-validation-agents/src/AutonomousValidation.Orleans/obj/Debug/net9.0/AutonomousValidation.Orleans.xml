@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AutonomousValidation.Orleans</name>
+    </assembly>
+    <members>
+        <member name="M:AutonomousValidation.Orleans.Controllers.HealthController.GetHealth">
+            <summary>
+            Basic health check endpoint
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Orleans.Controllers.HealthController.GetDetailedHealthAsync">
+            <summary>
+            Detailed health check including Orleans cluster and model status
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Orleans.Controllers.HealthController.GetReadinessAsync">
+            <summary>
+            Readiness check - indicates if the service is ready to handle requests
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Orleans.Controllers.HealthController.GetLiveness">
+            <summary>
+            Liveness check - indicates if the service is alive
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Orleans.Controllers.ModelsController.GetModelStatusAsync">
+            <summary>
+            Get the status of all models
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Orleans.Controllers.ModelsController.LoadModelAsync(System.String)">
+            <summary>
+            Load a specific model
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Orleans.Controllers.ModelsController.UnloadModelAsync(System.String)">
+            <summary>
+            Unload a specific model
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Orleans.Controllers.ModelsController.RunInferenceAsync(System.String,System.Object)">
+            <summary>
+            Run inference on a specific model
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Orleans.Controllers.ModelsController.LoadAllModelsAsync">
+            <summary>
+            Load all available models
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Orleans.Controllers.ModelsController.GetExecutionProvidersAsync">
+            <summary>
+            Get available execution providers
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Orleans.Grains.AgentTelemetryGrain">
+            <summary>
+            Basic telemetry grain for collecting agent performance metrics and decisions
+            This is the foundation for agent evaluation - starting simple with telemetry collection
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Orleans.Grains.ExcelIntelligenceGrain">
+            <summary>
+            Basic stub implementation of Excel Intelligence Grain
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Orleans.Grains.OrchestratorGrain">
+            <summary>
+            Simplified Orchestrator Grain implementation for Phase 1
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Orleans.Grains.PDFIntelligenceGrain">
+            <summary>
+            Enhanced PDF Intelligence Grain with Hugging Face model integration
+            Uses ModelManagerGrain for table extraction and document processing
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Orleans.Grains.PDFIntelligenceGrain.ExtractDataUsingMLAsync(AutonomousValidation.Core.Interfaces.IModelManagerGrain,System.Byte[])">
+            <summary>
+            Extract data using ML-enhanced table transformer model
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Orleans.Grains.PDFIntelligenceGrain.ExtractDataBasicAsync(System.Byte[])">
+            <summary>
+            Basic fallback extraction without ML
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Orleans.Grains.PDFIntelligenceGrain.ConvertInferenceOutputToKeyValuePairs(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Convert ML inference outputs to structured key-value pairs
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Orleans.Grains.ValidationGrain">
+            <summary>
+            Basic stub implementation of Validation Grain
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Orleans.Interfaces.IModelManagerGrain">
+            <summary>
+            Model manager grain interface for Hugging Face model lifecycle
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Orleans.Interfaces.IModelManagerGrain.LoadModelAsync(System.String,System.String)">
+            <summary>
+            Load ONNX model for inference
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Orleans.Interfaces.IModelManagerGrain.UnloadModelAsync(System.String)">
+            <summary>
+            Unload model to free memory
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Orleans.Interfaces.IModelManagerGrain.IsModelLoadedAsync(System.String)">
+            <summary>
+            Check if model is loaded and ready
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Orleans.Interfaces.IModelManagerGrain.GetModelMemoryUsageAsync(System.String)">
+            <summary>
+            Get model memory usage
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Orleans.Interfaces.IModelManagerGrain.RunInferenceAsync(System.String,AutonomousValidation.Core.Models.InferenceInput)">
+            <summary>
+            Perform inference using loaded model
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Orleans.Interfaces.IModelManagerGrain.GetAvailableExecutionProvidersAsync">
+            <summary>
+            Get available execution providers
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Orleans.Interfaces.IModelManagerGrain.SetExecutionProviderAsync(System.String)">
+            <summary>
+            Switch execution provider (CPU, CoreML, etc.)
+            </summary>
+        </member>
+    </members>
+</doc>

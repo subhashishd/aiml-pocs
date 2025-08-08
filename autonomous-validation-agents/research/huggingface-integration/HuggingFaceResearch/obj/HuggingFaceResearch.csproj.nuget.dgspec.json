@@ -1,0 +1,141 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/research/huggingface-integration/HuggingFaceResearch/HuggingFaceResearch.csproj": {}
+  },
+  "projects": {
+    "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/research/huggingface-integration/HuggingFaceResearch/HuggingFaceResearch.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/research/huggingface-integration/HuggingFaceResearch/HuggingFaceResearch.csproj",
+        "projectName": "HuggingFaceResearch",
+        "projectPath": "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/research/huggingface-integration/HuggingFaceResearch/HuggingFaceResearch.csproj",
+        "packagesPath": "/Users/subhashishdas/.nuget/packages/",
+        "outputPath": "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/research/huggingface-integration/HuggingFaceResearch/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/subhashishdas/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "/opt/homebrew/Cellar/dotnet/9.0.7/libexec/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ],
+          "warnNotAsError": [
+            "NU1701"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "AsyncFixer": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.6.0, )"
+            },
+            "ErrorProne.NET.CoreAnalyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[0.1.2, )"
+            },
+            "ErrorProne.NET.Structs": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[0.1.2, )"
+            },
+            "Microsoft.CodeAnalysis.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.3.4, )"
+            },
+            "Microsoft.CodeAnalysis.BannedApiAnalyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.3.4, )"
+            },
+            "Microsoft.CodeAnalysis.NetAnalyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.CodeAnalysis.PublicApiAnalyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.3.4, )"
+            },
+            "Microsoft.ML.OnnxRuntime": {
+              "target": "Package",
+              "version": "[1.22.1, )"
+            },
+            "Microsoft.ML.Tokenizers": {
+              "target": "Package",
+              "version": "[1.0.2, )"
+            },
+            "Microsoft.VisualStudio.Threading.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[17.8.14, )"
+            },
+            "SecurityCodeScan.VS2019": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.6.7, )"
+            },
+            "StyleCop.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.118, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/9.0.7/libexec/sdk/9.0.108/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

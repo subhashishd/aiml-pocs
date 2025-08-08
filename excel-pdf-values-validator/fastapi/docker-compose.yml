@@ -1,0 +1,155 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: pgvector/pgvector:pg15
+    environment:
+      - POSTGRES_DB=vectorstore
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # Redis for Celery broker and result backend
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes --maxmemory 1gb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # FastAPI Web Application
+  web:
+    build: .
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/1
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=vectorstore
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./app:/app/app
+      - model_cache:/app/models
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # Celery Worker for autonomous agent execution
+  celery-worker:
+    build: .
+    command: celery -A app.autonomous_agents.worker worker --loglevel=info --concurrency=4 --prefetch-multiplier=1
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/1
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+      - C_FORCE_ROOT=1
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - model_cache:/app/models
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 1G
+
+  # Celery Beat for scheduled autonomous tasks
+  celery-beat:
+    build: .
+    command: celery -A app.autonomous_agents.worker beat --loglevel=info --scheduler=celery.beat:PersistentScheduler
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/1
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - celery_beat_data:/app/celerybeat-schedule
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Celery Flower for monitoring (optional, for development)
+  flower:
+    build: .
+    command: celery -A app.autonomous_agents.worker flower --port=5555
+    ports:
+      - "5555:5555"
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/1
+    depends_on:
+      redis:
+        condition: service_healthy
+    profiles:
+      - monitoring
+    restart: unless-stopped
+
+  # Memory Monitor for autonomous agent resource management
+  memory-monitor:
+    build: .
+    command: python app/autonomous_agents/memory_monitor.py
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/1
+      - MEMORY_CHECK_INTERVAL=30
+      - MEMORY_WARNING_THRESHOLD=80
+      - MEMORY_CRITICAL_THRESHOLD=90
+    volumes:
+      - ./logs:/app/logs
+      - ./app:/app/app
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+  model_cache:
+  celery_beat_data:
+
+networks:
+  default:
+    driver: bridge

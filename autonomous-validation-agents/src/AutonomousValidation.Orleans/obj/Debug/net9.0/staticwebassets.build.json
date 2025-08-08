@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "n0Dq4c6wUEwIJpXGS0AP6y9YIeUQ3AkvT5KoqZssc8s=",
+  "Source": "AutonomousValidation.Orleans",
+  "BasePath": "_content/AutonomousValidation.Orleans",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

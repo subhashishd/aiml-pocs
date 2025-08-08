@@ -1,0 +1,60 @@
+# Dockerfile for Orleans application with ONNX Runtime support
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+WORKDIR /app
+EXPOSE 8080
+EXPOSE 11111
+EXPOSE 30000
+
+# Install ONNX Runtime dependencies
+RUN apt-get update && apt-get install -y \
+    libgomp1 \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+
+# Copy project files
+COPY ["src/AutonomousValidation.Core/AutonomousValidation.Core.csproj", "src/AutonomousValidation.Core/"]
+COPY ["src/AutonomousValidation.Orleans/AutonomousValidation.Orleans.csproj", "src/AutonomousValidation.Orleans/"]
+
+# Restore dependencies
+RUN dotnet restore "src/AutonomousValidation.Orleans/AutonomousValidation.Orleans.csproj"
+
+# Copy source code
+COPY src/ src/
+COPY Directory.Build.props .
+COPY .editorconfig .
+COPY stylecop.json .
+
+# Build the application
+WORKDIR "/src/src/AutonomousValidation.Orleans"
+RUN dotnet build "AutonomousValidation.Orleans.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "AutonomousValidation.Orleans.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+
+# Copy published application
+COPY --from=publish /app/publish .
+
+# Copy initialization scripts
+COPY scripts/init-models.sh /usr/local/bin/init-models.sh
+COPY scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/init-models.sh /usr/local/bin/entrypoint.sh
+
+# Create volume mount point for models
+RUN mkdir -p /models/huggingface
+
+# Set environment variables
+ENV ASPNETCORE_URLS=http://+:8080
+ENV MODEL_PATH=/models/huggingface
+ENV EXECUTION_PROVIDER=CPUExecutionProvider
+
+# Health check endpoint
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+    CMD curl -f http://localhost:8080/health || exit 1
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

@@ -1,0 +1,154 @@
+# Azure DevOps Deployment Template for Oracle VM
+# This template handles deployment to Oracle VM infrastructure
+
+parameters:
+- name: environment
+  type: string
+  values:
+  - dev
+  - prod
+- name: imageTag
+  type: string
+- name: oracleVMConnection
+  type: string
+
+steps:
+# Download deployment artifacts
+- task: DownloadBuildArtifacts@1
+  displayName: 'Download Deployment Artifacts'
+  inputs:
+    buildType: 'current'
+    downloadType: 'single'
+    artifactName: 'drop'
+    downloadPath: '$(System.ArtifactsDirectory)'
+
+# Copy deployment scripts to VM
+- task: CopyFilesOverSSH@0
+  displayName: 'Copy Deployment Scripts to Oracle VM'
+  inputs:
+    sshEndpoint: '${{ parameters.oracleVMConnection }}'
+    sourceFolder: '$(System.ArtifactsDirectory)/drop/deployment'
+    contents: '**'
+    targetFolder: '/opt/autonomous-validation/deployment'
+    readyTimeout: '20000'
+
+# Set executable permissions on scripts
+- task: SSH@0
+  displayName: 'Set Script Permissions'
+  inputs:
+    sshEndpoint: '${{ parameters.oracleVMConnection }}'
+    runOptions: 'inline'
+    inline: |
+      chmod +x /opt/autonomous-validation/deployment/scripts/*.sh
+      sudo chown -R $(whoami):$(whoami) /opt/autonomous-validation/
+
+# Login to GitHub Container Registry on VM
+- task: SSH@0
+  displayName: 'Login to Container Registry'
+  inputs:
+    sshEndpoint: '${{ parameters.oracleVMConnection }}'
+    runOptions: 'inline'
+    inline: |
+      echo "$(GITHUB_TOKEN)" | sudo docker login ghcr.io -u $(GITHUB_USERNAME) --password-stdin
+
+# Stop existing containers (graceful shutdown)
+- task: SSH@0
+  displayName: 'Graceful Shutdown of Existing Services'
+  inputs:
+    sshEndpoint: '${{ parameters.oracleVMConnection }}'
+    runOptions: 'inline'
+    inline: |
+      cd /opt/autonomous-validation/deployment
+      ./scripts/stop-services.sh ${{ parameters.environment }}
+  continueOnError: true
+
+# Pull latest container images
+- task: SSH@0
+  displayName: 'Pull Container Images'
+  inputs:
+    sshEndpoint: '${{ parameters.oracleVMConnection }}'
+    runOptions: 'inline'
+    inline: |
+      sudo docker pull ghcr.io/$(ImageRepository)/orleans-silo:${{ parameters.imageTag }}
+      
+      # Tag as latest for this environment
+      sudo docker tag ghcr.io/$(ImageRepository)/orleans-silo:${{ parameters.imageTag }} \
+                     ghcr.io/$(ImageRepository)/orleans-silo:${{ parameters.environment }}-latest
+
+# Deploy with Docker Compose
+- task: SSH@0
+  displayName: 'Deploy Services'
+  inputs:
+    sshEndpoint: '${{ parameters.oracleVMConnection }}'
+    runOptions: 'inline'
+    inline: |
+      cd /opt/autonomous-validation/deployment
+      
+      # Set environment variables
+      export ENVIRONMENT=${{ parameters.environment }}
+      export IMAGE_TAG=${{ parameters.imageTag }}
+      export BUILD_NUMBER=$(Build.BuildNumber)
+      
+      # Deploy using docker-compose
+      ./scripts/deploy-services.sh ${{ parameters.environment }} ${{ parameters.imageTag }}
+
+# Health check after deployment
+- task: SSH@0
+  displayName: 'Post-Deployment Health Check'
+  inputs:
+    sshEndpoint: '${{ parameters.oracleVMConnection }}'
+    runOptions: 'inline'
+    inline: |
+      cd /opt/autonomous-validation/deployment
+      ./scripts/health-check.sh ${{ parameters.environment }}
+
+# Update monitoring and logging
+- task: SSH@0
+  displayName: 'Update Monitoring Configuration'
+  inputs:
+    sshEndpoint: '${{ parameters.oracleVMConnection }}'
+    runOptions: 'inline'
+    inline: |
+      cd /opt/autonomous-validation/deployment
+      ./scripts/update-monitoring.sh ${{ parameters.environment }}
+
+# Clean up old images (keep last 3 versions)
+- task: SSH@0
+  displayName: 'Cleanup Old Container Images'
+  inputs:
+    sshEndpoint: '${{ parameters.oracleVMConnection }}'
+    runOptions: 'inline'
+    inline: |
+      # Remove dangling images
+      sudo docker image prune -f
+      
+      # Keep only last 3 versions of our images
+      sudo docker images ghcr.io/$(ImageRepository)/orleans-silo --format "table {{.Tag}}\t{{.ID}}" | \
+      grep -E '^[0-9]+' | sort -nr | tail -n +4 | awk '{print $2}' | \
+      xargs -r sudo docker rmi || true
+
+# Verify deployment success
+- task: SSH@0
+  displayName: 'Verify Deployment Status'
+  inputs:
+    sshEndpoint: '${{ parameters.oracleVMConnection }}'
+    runOptions: 'inline'
+    inline: |
+      echo "=== Deployment Verification ==="
+      echo "Environment: ${{ parameters.environment }}"
+      echo "Image Tag: ${{ parameters.imageTag }}"
+      echo "Build Number: $(Build.BuildNumber)"
+      echo ""
+      
+      echo "=== Running Containers ==="
+      sudo docker ps --filter "name=autonomous-validation" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+      echo ""
+      
+      echo "=== Container Logs (last 10 lines) ==="
+      sudo docker logs --tail 10 autonomous-validation-orleans-silo-1 || true
+      echo ""
+      
+      echo "=== Service Health Check ==="
+      curl -f http://localhost:8080/health || (echo "Health check failed" && exit 1)
+      
+      echo "=== Deployment Completed Successfully ==="

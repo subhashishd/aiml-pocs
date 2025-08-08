@@ -1,0 +1,199 @@
+# docker-compose.test.yml - Complete E2E Integration Testing Environment
+# This includes both backend and frontend services for comprehensive testing
+
+services:
+  # Redis - Message broker for Celery agents
+  redis:
+    image: redis:7-alpine
+    container_name: redis-test
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data_test:/data
+    networks:
+      - test-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # PostgreSQL with pgvector for embeddings
+  postgres:
+    image: ankane/pgvector
+    container_name: pgvector-db-test
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: validation_agents_test
+    volumes:
+      - pgdata_test:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"  # Different port to avoid conflicts
+    networks:
+      - test-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # FastAPI Backend
+  backend:
+    build: 
+      context: ./fastapi
+      dockerfile: Dockerfile.cached
+    container_name: fastapi-backend-test
+    ports:
+      - "8000:8000"
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    environment:
+      # Database
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/validation_agents_test
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=validation_agents_test
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      # Redis & Celery
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/1
+      # ML Models
+      - SENTENCE_TRANSFORMERS_HOME=/app/models
+      - TRANSFORMERS_CACHE=/app/models
+      - HF_HOME=/app/models
+      - USE_MULTIMODAL_PDF=true
+      - USE_OPTIMIZED_MULTIMODAL=true
+      - USE_LIGHTWEIGHT_MODEL=true
+      # Memory Management
+      - MAX_MEMORY_GB=8
+      - MEMORY_SAFETY_MARGIN=0.15
+      - UNLOAD_MODELS_AFTER_PROCESSING=true
+      # Test Environment
+      - ENVIRONMENT=test
+      - DEBUG=true
+    volumes:
+      - ./data:/app/data
+      # Mount local model cache instead of using Docker volume
+      - ./models_cache:/app/models:ro  # Read-only mount of local cache
+      - ./fastapi:/app
+    networks:
+      - test-net
+    restart: unless-stopped
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # Celery Worker for background tasks
+  celery-worker:
+    build:
+      context: ./fastapi
+      dockerfile: Dockerfile.cached
+    container_name: celery-worker-test
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    environment:
+      # Database
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/validation_agents_test
+      # Redis & Celery
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/1
+      # ML Models
+      - SENTENCE_TRANSFORMERS_HOME=/app/models
+      - TRANSFORMERS_CACHE=/app/models
+      - HF_HOME=/app/models
+      - USE_MULTIMODAL_PDF=true
+      - USE_OPTIMIZED_MULTIMODAL=true
+      # Memory Management
+      - MAX_MEMORY_GB=8
+      - MEMORY_SAFETY_MARGIN=0.15
+      # Test Environment
+      - ENVIRONMENT=test
+    volumes:
+      - ./data:/app/data
+      # Mount local model cache instead of using Docker volume
+      - ./models_cache:/app/models:ro  # Read-only mount of local cache
+      - ./fastapi:/app
+    networks:
+      - test-net
+    restart: unless-stopped
+    command: celery -A app.celery_agents worker --loglevel=info --concurrency=2
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: frontend-test
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    environment:
+      - REACT_APP_API_URL=http://backend:8000
+      - REACT_APP_ENVIRONMENT=test
+      - CHOKIDAR_USEPOLLING=true  # For file watching in containers
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules  # Anonymous volume for node_modules
+    networks:
+      - test-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Cypress E2E Testing Container
+  cypress:
+    image: cypress/included:13.6.1
+    container_name: cypress-e2e
+    depends_on:
+      frontend:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    environment:
+      - CYPRESS_baseUrl=http://frontend:3000
+      - CYPRESS_apiUrl=http://backend:8000
+    volumes:
+      - ./frontend:/e2e
+    networks:
+      - test-net
+    working_dir: /e2e
+    # Run tests when container starts
+    command: >
+      sh -c "
+        echo 'Waiting for services to be fully ready...' &&
+        sleep 30 &&
+        echo 'Running Cypress E2E tests...' &&
+        cypress run --headless --browser chrome
+      "
+    profiles:
+      - testing  # Only start when explicitly requested
+
+networks:
+  test-net:
+    driver: bridge
+
+volumes:
+  redis_data_test:
+  pgdata_test:
+  model_cache_test:

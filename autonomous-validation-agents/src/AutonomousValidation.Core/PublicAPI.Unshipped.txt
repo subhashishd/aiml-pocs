@@ -1,0 +1,220 @@
+#nullable enable
+AutonomousValidation.Core.Enums.AgentType
+AutonomousValidation.Core.Enums.AgentType.Orchestrator = 0 -> AutonomousValidation.Core.Enums.AgentType
+AutonomousValidation.Core.Enums.AgentType.ResourceManager = 1 -> AutonomousValidation.Core.Enums.AgentType
+AutonomousValidation.Core.Enums.AgentType.PDFIntelligence = 2 -> AutonomousValidation.Core.Enums.AgentType
+AutonomousValidation.Core.Enums.AgentType.ExcelIntelligence = 3 -> AutonomousValidation.Core.Enums.AgentType
+AutonomousValidation.Core.Enums.AgentType.Validation = 4 -> AutonomousValidation.Core.Enums.AgentType
+AutonomousValidation.Core.Enums.AgentType.OCRProcessor = 5 -> AutonomousValidation.Core.Enums.AgentType
+AutonomousValidation.Core.Enums.AgentType.MultimodalProcessor = 6 -> AutonomousValidation.Core.Enums.AgentType
+AutonomousValidation.Core.Enums.AgentType.SemanticKernel = 7 -> AutonomousValidation.Core.Enums.AgentType
+AutonomousValidation.Core.Enums.AgentType.ValidationEngine = 8 -> AutonomousValidation.Core.Enums.AgentType
+AutonomousValidation.Core.Enums.ConsolidationAction
+AutonomousValidation.Core.Enums.ConsolidationAction.NoAction = 0 -> AutonomousValidation.Core.Enums.ConsolidationAction
+AutonomousValidation.Core.Enums.ConsolidationAction.SelectiveConsolidation = 1 -> AutonomousValidation.Core.Enums.ConsolidationAction
+AutonomousValidation.Core.Enums.ConsolidationAction.RecommendConsolidation = 2 -> AutonomousValidation.Core.Enums.ConsolidationAction
+AutonomousValidation.Core.Enums.ConsolidationAction.ImmediateConsolidation = 3 -> AutonomousValidation.Core.Enums.ConsolidationAction
+AutonomousValidation.Core.Enums.DataType
+AutonomousValidation.Core.Enums.DataType.Unknown = 0 -> AutonomousValidation.Core.Enums.DataType
+AutonomousValidation.Core.Enums.DataType.Numerical = 1 -> AutonomousValidation.Core.Enums.DataType
+AutonomousValidation.Core.Enums.DataType.Currency = 2 -> AutonomousValidation.Core.Enums.DataType
+AutonomousValidation.Core.Enums.DataType.Measurement = 3 -> AutonomousValidation.Core.Enums.DataType
+AutonomousValidation.Core.Enums.DataType.DateTime = 4 -> AutonomousValidation.Core.Enums.DataType
+AutonomousValidation.Core.Enums.DataType.Text = 5 -> AutonomousValidation.Core.Enums.DataType
+AutonomousValidation.Core.Enums.DataType.Description = 6 -> AutonomousValidation.Core.Enums.DataType
+AutonomousValidation.Core.Enums.DataType.Categorical = 7 -> AutonomousValidation.Core.Enums.DataType
+AutonomousValidation.Core.Enums.DataType.Identifier = 8 -> AutonomousValidation.Core.Enums.DataType
+AutonomousValidation.Core.Enums.MatchingStrategy
+AutonomousValidation.Core.Enums.MatchingStrategy.ExactMatch = 0 -> AutonomousValidation.Core.Enums.MatchingStrategy
+AutonomousValidation.Core.Enums.MatchingStrategy.SemanticMatch = 1 -> AutonomousValidation.Core.Enums.MatchingStrategy
+AutonomousValidation.Core.Enums.MatchingStrategy.HybridMatch = 2 -> AutonomousValidation.Core.Enums.MatchingStrategy
+AutonomousValidation.Core.Enums.MatchingStrategy.ToleranceMatch = 3 -> AutonomousValidation.Core.Enums.MatchingStrategy
+AutonomousValidation.Core.Enums.MemoryMode
+AutonomousValidation.Core.Enums.MemoryMode.Low = 0 -> AutonomousValidation.Core.Enums.MemoryMode
+AutonomousValidation.Core.Enums.MemoryMode.Medium = 1 -> AutonomousValidation.Core.Enums.MemoryMode
+AutonomousValidation.Core.Enums.MemoryMode.High = 2 -> AutonomousValidation.Core.Enums.MemoryMode
+AutonomousValidation.Core.Enums.MemoryThreshold
+AutonomousValidation.Core.Enums.MemoryThreshold.Critical = 0 -> AutonomousValidation.Core.Enums.MemoryThreshold
+AutonomousValidation.Core.Enums.MemoryThreshold.Low = 1 -> AutonomousValidation.Core.Enums.MemoryThreshold
+AutonomousValidation.Core.Enums.MemoryThreshold.Medium = 2 -> AutonomousValidation.Core.Enums.MemoryThreshold
+AutonomousValidation.Core.Enums.MemoryThreshold.High = 3 -> AutonomousValidation.Core.Enums.MemoryThreshold
+AutonomousValidation.Core.Enums.ProcessingApproach
+AutonomousValidation.Core.Enums.ProcessingApproach.Traditional = 0 -> AutonomousValidation.Core.Enums.ProcessingApproach
+AutonomousValidation.Core.Enums.ProcessingApproach.ONNX = 1 -> AutonomousValidation.Core.Enums.ProcessingApproach
+AutonomousValidation.Core.Enums.ProcessingApproach.PythonML = 2 -> AutonomousValidation.Core.Enums.ProcessingApproach
+AutonomousValidation.Core.Enums.ProcessingApproach.SemanticKernel = 3 -> AutonomousValidation.Core.Enums.ProcessingApproach
+AutonomousValidation.Core.Enums.ProcessingStep
+AutonomousValidation.Core.Enums.ProcessingStep.Idle = 0 -> AutonomousValidation.Core.Enums.ProcessingStep
+AutonomousValidation.Core.Enums.ProcessingStep.FileAnalysis = 1 -> AutonomousValidation.Core.Enums.ProcessingStep
+AutonomousValidation.Core.Enums.ProcessingStep.PDFExtraction = 2 -> AutonomousValidation.Core.Enums.ProcessingStep
+AutonomousValidation.Core.Enums.ProcessingStep.ExcelProcessing = 3 -> AutonomousValidation.Core.Enums.ProcessingStep
+AutonomousValidation.Core.Enums.ProcessingStep.Validation = 4 -> AutonomousValidation.Core.Enums.ProcessingStep
+AutonomousValidation.Core.Enums.ProcessingStep.ReportGeneration = 5 -> AutonomousValidation.Core.Enums.ProcessingStep
+AutonomousValidation.Core.Enums.ProcessingStep.Complete = 6 -> AutonomousValidation.Core.Enums.ProcessingStep
+AutonomousValidation.Core.Enums.ProcessingStrategy
+AutonomousValidation.Core.Enums.ProcessingStrategy.Minimal = 0 -> AutonomousValidation.Core.Enums.ProcessingStrategy
+AutonomousValidation.Core.Enums.ProcessingStrategy.Consolidated = 1 -> AutonomousValidation.Core.Enums.ProcessingStrategy
+AutonomousValidation.Core.Enums.ProcessingStrategy.Selective = 2 -> AutonomousValidation.Core.Enums.ProcessingStrategy
+AutonomousValidation.Core.Enums.ProcessingStrategy.FullCapability = 3 -> AutonomousValidation.Core.Enums.ProcessingStrategy
+AutonomousValidation.Core.Enums.ProcessingStrategy.Traditional = 4 -> AutonomousValidation.Core.Enums.ProcessingStrategy
+AutonomousValidation.Core.Interfaces.IAdaptiveGrain
+AutonomousValidation.Core.Interfaces.IAdaptiveGrain.AdaptToMemoryConstraintsAsync(AutonomousValidation.Core.Enums.MemoryThreshold threshold) -> System.Threading.Tasks.Task
+AutonomousValidation.Core.Interfaces.IAgentTelemetryGrain
+AutonomousValidation.Core.Interfaces.IAgentTelemetryGrain.GetBasicStatsAsync() -> System.Threading.Tasks.Task<AutonomousValidation.Core.Models.BasicAgentStats!>
+AutonomousValidation.Core.Interfaces.IAgentTelemetryGrain.GetBehaviorProfileAsync() -> System.Threading.Tasks.Task<AutonomousValidation.Core.Models.AgentBehaviorProfile!>
+AutonomousValidation.Core.Interfaces.IAgentTelemetryGrain.GetRecentDecisionsAsync(int count) -> System.Threading.Tasks.Task<System.Collections.Generic.IList<AutonomousValidation.Core.Models.AgentDecision!>!>
+AutonomousValidation.Core.Interfaces.IAgentTelemetryGrain.GetRecentMetricsAsync(System.TimeSpan timespan) -> System.Threading.Tasks.Task<System.Collections.Generic.IList<AutonomousValidation.Core.Models.PerformanceMetric!>!>
+AutonomousValidation.Core.Interfaces.IAgentTelemetryGrain.RecordAdaptationEventAsync(AutonomousValidation.Core.Models.AdaptationEvent adaptationEvent) -> System.Threading.Tasks.Task
+AutonomousValidation.Core.Interfaces.IAgentTelemetryGrain.RecordDecisionAsync(AutonomousValidation.Core.Models.AgentDecision decision) -> System.Threading.Tasks.Task
+AutonomousValidation.Core.Interfaces.IAgentTelemetryGrain.RecordPerformanceMetricAsync(AutonomousValidation.Core.Models.PerformanceMetric metric) -> System.Threading.Tasks.Task
+AutonomousValidation.Core.Interfaces.IAgentTelemetryGrain.RecordResourceUsageAsync(AutonomousValidation.Core.Models.ResourceUsageSnapshot usage) -> System.Threading.Tasks.Task
+AutonomousValidation.Core.Interfaces.IExcelIntelligenceGrain
+AutonomousValidation.Core.Interfaces.IExcelIntelligenceGrain.ConsolidateWithPDFGrainAsync(string pdfGrainId) -> System.Threading.Tasks.Task
+AutonomousValidation.Core.Interfaces.IExcelIntelligenceGrain.ExtractParametersAsync(byte[]! fileData) -> System.Threading.Tasks.Task<System.Collections.Generic.List<AutonomousValidation.Core.Models.ExcelParameter!>!>
+AutonomousValidation.Core.Interfaces.IExcelIntelligenceGrain.ProcessExcelAsync(byte[]! fileData) -> System.Threading.Tasks.Task<AutonomousValidation.Core.Models.ExcelProcessingResult!>
+AutonomousValidation.Core.Interfaces.IMultimodalProcessorGrain
+AutonomousValidation.Core.Interfaces.IMultimodalProcessorGrain.ProcessVisualContentAsync(byte[]! imageData, string! contentType) -> System.Threading.Tasks.Task<AutonomousValidation.Core.Models.PDFProcessingResult!>
+AutonomousValidation.Core.Interfaces.IOCRProcessorGrain
+AutonomousValidation.Core.Interfaces.IOCRProcessorGrain.ExtractTextAsync(byte[]! imageData) -> System.Threading.Tasks.Task<string!>
+AutonomousValidation.Core.Interfaces.IOrchestratorGrain
+AutonomousValidation.Core.Interfaces.IOrchestratorGrain.AdaptToResourceConstraintsAsync(AutonomousValidation.Core.Models.ResourceStatus resourceStatus) -> System.Threading.Tasks.Task
+AutonomousValidation.Core.Interfaces.IOrchestratorGrain.GetCurrentResourceStatusAsync() -> System.Threading.Tasks.Task<AutonomousValidation.Core.Models.ResourceStatus!>
+AutonomousValidation.Core.Interfaces.IOrchestratorGrain.GetProcessingStatusAsync() -> System.Threading.Tasks.Task<string!>
+AutonomousValidation.Core.Interfaces.IOrchestratorGrain.ProcessValidationRequestAsync(AutonomousValidation.Core.Models.ValidationRequest! request) -> System.Threading.Tasks.Task<AutonomousValidation.Core.Models.ValidationResult!>
+AutonomousValidation.Core.Interfaces.IPDFIntelligenceGrain
+AutonomousValidation.Core.Interfaces.IPDFIntelligenceGrain.AbsorbExcelCapabilitiesAsync(string excelGrainId) -> System.Threading.Tasks.Task
+AutonomousValidation.Core.Interfaces.IPDFIntelligenceGrain.AdaptToMemoryConstraintsAsync(AutonomousValidation.Core.Enums.MemoryThreshold threshold) -> System.Threading.Tasks.Task
+AutonomousValidation.Core.Interfaces.IPDFIntelligenceGrain.ExtractKeyValuePairsAsync(byte[]! fileData) -> System.Threading.Tasks.Task<System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<string!, object!>>!>
+AutonomousValidation.Core.Interfaces.IPDFIntelligenceGrain.ProcessPDFAsync(byte[]! fileData) -> System.Threading.Tasks.Task<AutonomousValidation.Core.Models.PDFProcessingResult!>
+AutonomousValidation.Core.Interfaces.IResourceManagerGrain
+AutonomousValidation.Core.Interfaces.IResourceManagerGrain.CanSpawnSubAgentAsync(AutonomousValidation.Core.Enums.AgentType agentType) -> System.Threading.Tasks.Task
+AutonomousValidation.Core.Interfaces.IResourceManagerGrain.GetConsolidationRecommendationAsync() -> System.Threading.Tasks.Task<AutonomousValidation.Core.Models.ConsolidationRecommendation!>
+AutonomousValidation.Core.Interfaces.IResourceManagerGrain.GetResourceStatusAsync() -> System.Threading.Tasks.Task<AutonomousValidation.Core.Models.ResourceStatus!>
+AutonomousValidation.Core.Interfaces.IResourceManagerGrain.RegisterGrainMemoryUsageAsync(string grainId, long memoryBytes) -> System.Threading.Tasks.Task
+AutonomousValidation.Core.Interfaces.IResourceManagerGrain.UpdateMemoryStatusAsync(AutonomousValidation.Core.Models.MemoryStatus status) -> System.Threading.Tasks.Task
+AutonomousValidation.Core.Interfaces.IValidationGrain
+AutonomousValidation.Core.Interfaces.IValidationGrain.PerformExactMatchingAsync(System.Collections.Generic.List<AutonomousValidation.Core.Models.ExcelParameter!>! excelParams, System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<string!, object!>>! pdfData) -> System.Threading.Tasks.Task<AutonomousValidation.Core.Models.MatchingResult!>
+AutonomousValidation.Core.Interfaces.IValidationGrain.PerformSemanticMatchingAsync(System.Collections.Generic.List<AutonomousValidation.Core.Models.ExcelParameter!>! excelParams, System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<string!, object!>>! pdfData) -> System.Threading.Tasks.Task<AutonomousValidation.Core.Models.MatchingResult!>
+AutonomousValidation.Core.Interfaces.IValidationGrain.ValidateAsync(System.Collections.Generic.List<AutonomousValidation.Core.Models.ExcelParameter!>! excelParameters, System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<string!, object!>>! pdfKeyValuePairs) -> System.Threading.Tasks.Task<AutonomousValidation.Core.Models.ValidationResult!>
+AutonomousValidation.Core.Models.AdaptationEvent
+AutonomousValidation.Core.Models.AdaptationEvent.AdaptationEvent() -> void
+AutonomousValidation.Core.Models.AdaptationEvent.AdaptationType { get; set; } -> string!
+AutonomousValidation.Core.Models.AdaptationEvent.EventData { get; set; } -> System.Collections.Generic.Dictionary<string!, object!>!
+AutonomousValidation.Core.Models.AdaptationEvent.Timestamp { get; set; } -> System.DateTime
+AutonomousValidation.Core.Models.AgentBehaviorProfile
+AutonomousValidation.Core.Models.AgentBehaviorProfile.AgentBehaviorProfile() -> void
+AutonomousValidation.Core.Models.AgentBehaviorProfile.AverageResponseTime { get; set; } -> double
+AutonomousValidation.Core.Models.AgentBehaviorProfile.DecisionTypeBreakdown { get; set; } -> System.Collections.Generic.Dictionary<string!, int>!
+AutonomousValidation.Core.Models.AgentBehaviorProfile.MemoryAdaptabilityScore { get; set; } -> double
+AutonomousValidation.Core.Models.AgentBehaviorProfile.MetricTypeBreakdown { get; set; } -> System.Collections.Generic.Dictionary<string!, double>!
+AutonomousValidation.Core.Models.AgentBehaviorProfile.TotalDecisions { get; set; } -> int
+AutonomousValidation.Core.Models.AgentDecision
+AutonomousValidation.Core.Models.AgentDecision.AgentDecision() -> void
+AutonomousValidation.Core.Models.AgentDecision.AgentId { get; set; } -> string!
+AutonomousValidation.Core.Models.AgentDecision.Context { get; set; } -> System.Collections.Generic.Dictionary<string!, object!>!
+AutonomousValidation.Core.Models.AgentDecision.DecisionType { get; set; } -> string!
+AutonomousValidation.Core.Models.AgentDecision.Rationale { get; set; } -> System.Collections.Generic.Dictionary<string!, object!>!
+AutonomousValidation.Core.Models.AgentDecision.Timestamp { get; set; } -> System.DateTime
+AutonomousValidation.Core.Models.BasicAgentStats
+AutonomousValidation.Core.Models.BasicAgentStats.BasicAgentStats() -> void
+AutonomousValidation.Core.Models.BasicAgentStats.DecisionCount { get; set; } -> int
+AutonomousValidation.Core.Models.BasicAgentStats.LastActivity { get; set; } -> System.DateTime
+AutonomousValidation.Core.Models.BasicAgentStats.MetricCount { get; set; } -> int
+AutonomousValidation.Core.Models.BasicAgentStats.TotalAdaptations { get; set; } -> int
+AutonomousValidation.Core.Models.ConsolidationRecommendation
+AutonomousValidation.Core.Models.ConsolidationRecommendation.AgentsToConsolidate { get; init; } -> System.Collections.Generic.List<AutonomousValidation.Core.Enums.AgentType>!
+AutonomousValidation.Core.Models.ConsolidationRecommendation.EstimatedMemorySavings { get; init; } -> long
+AutonomousValidation.Core.Models.ConsolidationRecommendation.Reasoning { get; init; } -> string!
+AutonomousValidation.Core.Models.ConsolidationRecommendation.ShouldConsolidate { get; init; } -> bool
+AutonomousValidation.Core.Models.ConsolidationRecommendation.TargetAgent { get; init; } -> AutonomousValidation.Core.Enums.AgentType
+AutonomousValidation.Core.Models.ExcelParameter
+AutonomousValidation.Core.Models.ExcelParameter.CellReference { get; init; } -> string!
+AutonomousValidation.Core.Models.ExcelParameter.Context { get; init; } -> string!
+AutonomousValidation.Core.Models.ExcelParameter.EstimatedType { get; init; } -> AutonomousValidation.Core.Enums.DataType
+AutonomousValidation.Core.Models.ExcelParameter.Name { get; init; } -> string!
+AutonomousValidation.Core.Models.ExcelParameter.Value { get; init; } -> object!
+AutonomousValidation.Core.Models.ExcelProcessingResult
+AutonomousValidation.Core.Models.ExcelProcessingResult.Errors { get; init; } -> System.Collections.Generic.List<string!>!
+AutonomousValidation.Core.Models.ExcelProcessingResult.Metadata { get; init; } -> AutonomousValidation.Core.Models.ProcessingMetadata!
+AutonomousValidation.Core.Models.ExcelProcessingResult.Parameters { get; init; } -> System.Collections.Generic.List<AutonomousValidation.Core.Models.ExcelParameter!>!
+AutonomousValidation.Core.Models.GrainMemoryUsage
+AutonomousValidation.Core.Models.GrainMemoryUsage.AgentType { get; init; } -> AutonomousValidation.Core.Enums.AgentType
+AutonomousValidation.Core.Models.GrainMemoryUsage.GrainId { get; init; } -> string!
+AutonomousValidation.Core.Models.GrainMemoryUsage.LastUpdated { get; init; } -> System.DateTime
+AutonomousValidation.Core.Models.GrainMemoryUsage.MemoryUsageBytes { get; init; } -> long
+AutonomousValidation.Core.Models.MatchingResult
+AutonomousValidation.Core.Models.MatchingResult.AverageConfidenceScore { get; init; } -> double
+AutonomousValidation.Core.Models.MatchingResult.HighConfidenceMatches { get; init; } -> int
+AutonomousValidation.Core.Models.MatchingResult.LowConfidenceMatches { get; init; } -> int
+AutonomousValidation.Core.Models.MatchingResult.MatchedParameters { get; init; } -> int
+AutonomousValidation.Core.Models.MatchingResult.TotalParameters { get; init; } -> int
+AutonomousValidation.Core.Models.MatchingResult.UnmatchedParameters { get; init; } -> int
+AutonomousValidation.Core.Models.MemoryStatus
+AutonomousValidation.Core.Models.MemoryStatus.ActiveGrainsCount { get; init; } -> int
+AutonomousValidation.Core.Models.MemoryStatus.AvailableMemoryBytes { get; init; } -> long
+AutonomousValidation.Core.Models.MemoryStatus.CurrentThreshold { get; init; } -> AutonomousValidation.Core.Enums.MemoryThreshold
+AutonomousValidation.Core.Models.MemoryStatus.GrainUsages { get; init; } -> System.Collections.Generic.List<AutonomousValidation.Core.Models.GrainMemoryUsage!>!
+AutonomousValidation.Core.Models.MemoryStatus.Timestamp { get; init; } -> System.DateTime
+AutonomousValidation.Core.Models.MemoryStatus.TotalMemoryBytes { get; init; } -> long
+AutonomousValidation.Core.Models.MemoryStatus.UsedMemoryBytes { get; init; } -> long
+AutonomousValidation.Core.Models.PDFProcessingResult
+AutonomousValidation.Core.Models.PDFProcessingResult.ApproachUsed { get; init; } -> AutonomousValidation.Core.Enums.ProcessingApproach
+AutonomousValidation.Core.Models.PDFProcessingResult.Errors { get; init; } -> System.Collections.Generic.List<string!>!
+AutonomousValidation.Core.Models.PDFProcessingResult.ExtractedText { get; init; } -> System.Collections.Generic.List<string!>!
+AutonomousValidation.Core.Models.PDFProcessingResult.KeyValuePairs { get; init; } -> System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<string!, object!>>!
+AutonomousValidation.Core.Models.PDFProcessingResult.Metadata { get; init; } -> AutonomousValidation.Core.Models.ProcessingMetadata!
+AutonomousValidation.Core.Models.ParameterValidationResult
+AutonomousValidation.Core.Models.ParameterValidationResult.ConfidenceScore { get; set; } -> double
+AutonomousValidation.Core.Models.ParameterValidationResult.ExcelValue { get; set; } -> object!
+AutonomousValidation.Core.Models.ParameterValidationResult.IsValid { get; set; } -> bool
+AutonomousValidation.Core.Models.ParameterValidationResult.ParameterName { get; set; } -> string!
+AutonomousValidation.Core.Models.ParameterValidationResult.PDFValue { get; set; } -> object!
+AutonomousValidation.Core.Models.ParameterValidationResult.ValidationMessage { get; set; } -> string!
+AutonomousValidation.Core.Models.PerformanceMetric
+AutonomousValidation.Core.Models.PerformanceMetric.Dimensions { get; set; } -> System.Collections.Generic.Dictionary<string!, string!>!
+AutonomousValidation.Core.Models.PerformanceMetric.MetricName { get; set; } -> string!
+AutonomousValidation.Core.Models.PerformanceMetric.PerformanceMetric() -> void
+AutonomousValidation.Core.Models.PerformanceMetric.Timestamp { get; set; } -> System.DateTime
+AutonomousValidation.Core.Models.PerformanceMetric.Value { get; set; } -> double
+AutonomousValidation.Core.Models.ProcessingMetadata
+AutonomousValidation.Core.Models.ProcessingMetadata.AdditionalMetrics { get; init; } -> System.Collections.Generic.Dictionary<string!, object!>!
+AutonomousValidation.Core.Models.ProcessingMetadata.AgentsInvolved { get; init; } -> System.Collections.Generic.List<AutonomousValidation.Core.Enums.AgentType>!
+AutonomousValidation.Core.Models.ProcessingMetadata.ApproachUsed { get; init; } -> AutonomousValidation.Core.Enums.ProcessingApproach
+AutonomousValidation.Core.Models.ProcessingMetadata.EndTime { get; init; } -> System.DateTime
+AutonomousValidation.Core.Models.ProcessingMetadata.MemoryUsedBytes { get; init; } -> long
+AutonomousValidation.Core.Models.ProcessingMetadata.ProcessingTime { get; init; } -> System.TimeSpan
+AutonomousValidation.Core.Models.ProcessingMetadata.StartTime { get; init; } -> System.DateTime
+AutonomousValidation.Core.Models.ProcessingMetadata.StrategyUsed { get; init; } -> AutonomousValidation.Core.Enums.ProcessingStrategy
+AutonomousValidation.Core.Models.ProcessingOptions
+AutonomousValidation.Core.Models.ProcessingOptions.EnableSemanticMatching { get; set; } -> bool
+AutonomousValidation.Core.Models.ProcessingOptions.MaxProcessingTimeMinutes { get; set; } -> int
+AutonomousValidation.Core.Models.ProcessingOptions.Strategy { get; set; } -> AutonomousValidation.Core.Enums.ProcessingStrategy
+AutonomousValidation.Core.Models.ProcessingOptions.TolerancePercentage { get; set; } -> double
+AutonomousValidation.Core.Models.ResourceStatus
+AutonomousValidation.Core.Models.ResourceStatus.AvailableMemoryBytes { get; init; } -> long
+AutonomousValidation.Core.Models.ResourceStatus.MemoryUsagePercentage { get; init; } -> double
+AutonomousValidation.Core.Models.ResourceStatus.TotalMemoryBytes { get; init; } -> long
+AutonomousValidation.Core.Models.ResourceStatus.UsedMemoryBytes { get; init; } -> long
+AutonomousValidation.Core.Models.ResourceUsageSnapshot
+AutonomousValidation.Core.Models.ResourceUsageSnapshot.CustomMetrics { get; set; } -> System.Collections.Generic.Dictionary<string!, double>!
+AutonomousValidation.Core.Models.ResourceUsageSnapshot.MemoryUsageBytes { get; set; } -> long
+AutonomousValidation.Core.Models.ResourceUsageSnapshot.ResourceUsageSnapshot() -> void
+AutonomousValidation.Core.Models.ResourceUsageSnapshot.Timestamp { get; set; } -> System.DateTime
+AutonomousValidation.Core.Models.ValidationRequest
+AutonomousValidation.Core.Models.ValidationRequest.ExcelFileData { get; set; } -> byte[]!
+AutonomousValidation.Core.Models.ValidationRequest.Options { get; set; } -> AutonomousValidation.Core.Models.ProcessingOptions!
+AutonomousValidation.Core.Models.ValidationRequest.PDFFileData { get; set; } -> byte[]!
+AutonomousValidation.Core.Models.ValidationRequest.RequestId { get; set; } -> string!
+AutonomousValidation.Core.Models.ValidationResult
+AutonomousValidation.Core.Models.ValidationResult.Errors { get; init; } -> System.Collections.Generic.List<string!>!
+AutonomousValidation.Core.Models.ValidationResult.IsSuccess { get; set; } -> bool
+AutonomousValidation.Core.Models.ValidationResult.Metadata { get; set; } -> AutonomousValidation.Core.Models.ProcessingMetadata!
+AutonomousValidation.Core.Models.ValidationResult.Results { get; init; } -> System.Collections.Generic.List<AutonomousValidation.Core.Models.ParameterValidationResult!>!
+AutonomousValidation.Core.Models.ValidationResult.Summary { get; set; } -> AutonomousValidation.Core.Models.ValidationSummary!
+AutonomousValidation.Core.Models.ValidationResult.ValidationId { get; set; } -> string!
+AutonomousValidation.Core.Models.ValidationSummary
+AutonomousValidation.Core.Models.ValidationSummary.AverageConfidenceScore { get; set; } -> double
+AutonomousValidation.Core.Models.ValidationSummary.HighConfidenceMatches { get; set; } -> int
+AutonomousValidation.Core.Models.ValidationSummary.MatchedParameters { get; set; } -> int
+AutonomousValidation.Core.Models.ValidationSummary.TotalParameters { get; set; } -> int
+AutonomousValidation.Core.Models.ValidationSummary.UnmatchedParameters { get; set; } -> int

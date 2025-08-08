@@ -1,0 +1,51 @@
+# docker-compose.yml
+
+services:
+  fastapi-app:
+    image: ghcr.io/your-username/excel-pdf-values-validator:latest
+    container_name: ai-validator
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=vectorstore
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - SENTENCE_TRANSFORMERS_HOME=/app/models
+      - TRANSFORMERS_CACHE=/app/models
+      - HF_HOME=/app/models
+      - TRANSFORMERS_OFFLINE=1
+      - HF_DATASETS_OFFLINE=1
+    volumes:
+      - ./data:/app/data
+      - model_cache:/app/models
+    networks:
+      - flexcts-net
+    restart: unless-stopped
+
+  postgres:
+    image: ankane/pgvector
+    container_name: pgvector-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: vectorstore
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - flexcts-net
+
+networks:
+  flexcts-net:
+    driver: bridge
+
+volumes:
+  pgdata:
+  model_cache:
+
+

@@ -1,0 +1,829 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AutonomousValidation.Core</name>
+    </assembly>
+    <members>
+        <member name="T:AutonomousValidation.Core.Enums.MemoryThreshold">
+            <summary>
+            Represents different memory threshold levels for adaptive resource management
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.MemoryThreshold.Critical">
+            <summary>
+            Critical memory level (&lt;1GB available) - Single orchestrator with sequential processing
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.MemoryThreshold.Low">
+            <summary>
+            Low memory level (1-3GB available) - Consolidated agents with minimal sub-agents
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.MemoryThreshold.Medium">
+            <summary>
+            Medium memory level (3-6GB available) - Core agents with selective sub-agent spawning
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.MemoryThreshold.High">
+            <summary>
+            High memory level (&gt;6GB available) - Full agent ecosystem with sub-agents
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Enums.ProcessingStrategy">
+            <summary>
+            Defines different processing strategies based on available resources
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.ProcessingStrategy.Minimal">
+            <summary>
+            Minimal processing with basic functionality only
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.ProcessingStrategy.Consolidated">
+            <summary>
+            Consolidated processing with merged agent capabilities
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.ProcessingStrategy.Selective">
+            <summary>
+            Selective processing with some sub-agent delegation
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.ProcessingStrategy.FullCapability">
+            <summary>
+            Full capability processing with all sub-agents
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Enums.ProcessingApproach">
+            <summary>
+            Defines different processing approaches for ML inference
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.ProcessingApproach.Traditional">
+            <summary>
+            Traditional text-based processing without ML
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.ProcessingApproach.ONNX">
+            <summary>
+            ONNX model inference in .NET
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.ProcessingApproach.PythonML">
+            <summary>
+            Python ML service via gRPC
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.ProcessingApproach.SemanticKernel">
+            <summary>
+            Semantic Kernel orchestrated processing
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Enums.DataType">
+            <summary>
+            Defines data types for intelligent matching strategy selection
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.DataType.Unknown">
+            <summary>
+            Unknown or unclassified data type
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.DataType.Numerical">
+            <summary>
+            Numerical values (integers, floats)
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.DataType.Currency">
+            <summary>
+            Currency values
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.DataType.Measurement">
+            <summary>
+            Measurements and quantities
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.DataType.DateTime">
+            <summary>
+            Date and time values
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.DataType.Text">
+            <summary>
+            Text descriptions
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.DataType.Description">
+            <summary>
+            Long form descriptions
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.DataType.Categorical">
+            <summary>
+            Categorical labels
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.DataType.Identifier">
+            <summary>
+            Identifier values
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Enums.AgentType">
+            <summary>
+            Defines agent types for resource management
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.AgentType.Orchestrator">
+            <summary>
+            Main orchestrator agent
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.AgentType.ResourceManager">
+            <summary>
+            Resource manager agent
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.AgentType.PDFIntelligence">
+            <summary>
+            PDF intelligence agent
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.AgentType.ExcelIntelligence">
+            <summary>
+            Excel intelligence agent
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.AgentType.Validation">
+            <summary>
+            Validation agent
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.AgentType.OCRProcessor">
+            <summary>
+            OCR processor sub-agent
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.AgentType.MultimodalProcessor">
+            <summary>
+            Multimodal processor sub-agent
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.AgentType.SemanticKernel">
+            <summary>
+            Semantic kernel agent
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.AgentType.ValidationEngine">
+            <summary>
+            Validation engine sub-agent
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Enums.ConsolidationAction">
+            <summary>
+            Defines consolidation actions for memory management
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.ConsolidationAction.NoAction">
+            <summary>
+            No action needed
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.ConsolidationAction.SelectiveConsolidation">
+            <summary>
+            Selective consolidation of some agents
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.ConsolidationAction.RecommendConsolidation">
+            <summary>
+            Recommend consolidation
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.ConsolidationAction.ImmediateConsolidation">
+            <summary>
+            Immediate consolidation required
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Enums.ProcessingStep">
+            <summary>
+            Defines processing steps in the validation workflow
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.ProcessingStep.Idle">
+            <summary>
+            No processing active
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.ProcessingStep.FileAnalysis">
+            <summary>
+            Analyzing uploaded files
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.ProcessingStep.PDFExtraction">
+            <summary>
+            Extracting data from PDF
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.ProcessingStep.ExcelProcessing">
+            <summary>
+            Processing Excel data
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.ProcessingStep.Validation">
+            <summary>
+            Performing validation
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.ProcessingStep.ReportGeneration">
+            <summary>
+            Generating final report
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.ProcessingStep.Complete">
+            <summary>
+            Processing complete
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Enums.MemoryMode">
+            <summary>
+            Defines memory usage modes
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.MemoryMode.Low">
+            <summary>
+            Low memory mode with minimal features
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.MemoryMode.Medium">
+            <summary>
+            Medium memory mode with balanced features
+            </summary>
+        </member>
+        <member name="F:AutonomousValidation.Core.Enums.MemoryMode.High">
+            <summary>
+            High memory mode with full features
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Interfaces.IAgentTelemetryGrain">
+            <summary>
+            Interface for collecting and analyzing agent telemetry data
+            This is our foundation for agent evaluation - starting with basic telemetry collection
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IAgentTelemetryGrain.RecordDecisionAsync(AutonomousValidation.Core.Models.AgentDecision)">
+            <summary>
+            Record a decision made by the agent
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IAgentTelemetryGrain.RecordPerformanceMetricAsync(AutonomousValidation.Core.Models.PerformanceMetric)">
+            <summary>
+            Record a performance metric
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IAgentTelemetryGrain.RecordResourceUsageAsync(AutonomousValidation.Core.Models.ResourceUsageSnapshot)">
+            <summary>
+            Record resource usage snapshot
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IAgentTelemetryGrain.RecordAdaptationEventAsync(AutonomousValidation.Core.Models.AdaptationEvent)">
+            <summary>
+            Record an adaptation event
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IAgentTelemetryGrain.GetBehaviorProfileAsync(System.TimeSpan)">
+            <summary>
+            Get behavior profile for a specific time period
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IAgentTelemetryGrain.GetRecentDecisionsAsync(System.TimeSpan)">
+            <summary>
+            Get recent decisions within a time period
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IAgentTelemetryGrain.GetRecentMetricsAsync(System.TimeSpan)">
+            <summary>
+            Get recent performance metrics within a time period
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IAgentTelemetryGrain.GetBasicStatsAsync">
+            <summary>
+            Get basic statistics for the agent
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Interfaces.IOrchestratorGrain">
+            <summary>
+            Main orchestrator grain interface
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IOrchestratorGrain.ProcessValidationRequestAsync(AutonomousValidation.Core.Models.ValidationRequest)">
+            <summary>
+            Process a validation request
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IOrchestratorGrain.GetCurrentResourceStatusAsync">
+            <summary>
+            Get current resource status
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IOrchestratorGrain.AdaptToResourceConstraintsAsync(AutonomousValidation.Core.Enums.MemoryThreshold)">
+            <summary>
+            Adapt to resource constraints
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IOrchestratorGrain.GetProcessingStatusAsync">
+            <summary>
+            Get processing status
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Interfaces.IResourceManagerGrain">
+            <summary>
+            Resource manager grain interface
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IResourceManagerGrain.GetResourceStatusAsync">
+            <summary>
+            Get current resource status
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IResourceManagerGrain.CanSpawnSubAgentAsync(AutonomousValidation.Core.Enums.AgentType)">
+            <summary>
+            Check if sub-agent can be spawned
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IResourceManagerGrain.RegisterGrainMemoryUsageAsync(System.String,System.Int64)">
+            <summary>
+            Register grain memory usage
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IResourceManagerGrain.GetConsolidationRecommendationAsync">
+            <summary>
+            Get consolidation recommendation
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IResourceManagerGrain.UpdateMemoryStatusAsync(AutonomousValidation.Core.Models.MemoryStatus)">
+            <summary>
+            Update memory status
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Interfaces.IPDFIntelligenceGrain">
+            <summary>
+            PDF intelligence grain interface
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IPDFIntelligenceGrain.ProcessPDFAsync(System.Byte[],AutonomousValidation.Core.Models.ProcessingOptions)">
+            <summary>
+            Process PDF document
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IPDFIntelligenceGrain.ExtractKeyValuePairsAsync(System.Byte[])">
+            <summary>
+            Extract key-value pairs from PDF
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IPDFIntelligenceGrain.AdaptToMemoryConstraintsAsync(AutonomousValidation.Core.Enums.MemoryThreshold)">
+            <summary>
+            Adapt to memory constraints
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IPDFIntelligenceGrain.AbsorbExcelCapabilitiesAsync(System.String)">
+            <summary>
+            Absorb Excel capabilities for consolidation
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Interfaces.IExcelIntelligenceGrain">
+            <summary>
+            Excel intelligence grain interface
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IExcelIntelligenceGrain.ProcessExcelAsync(System.Byte[],AutonomousValidation.Core.Models.ProcessingOptions)">
+            <summary>
+            Process Excel document
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IExcelIntelligenceGrain.ExtractParametersAsync(System.Byte[])">
+            <summary>
+            Extract parameters from Excel
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IExcelIntelligenceGrain.ConsolidateWithPDFGrainAsync(System.String)">
+            <summary>
+            Consolidate with PDF grain
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Interfaces.IValidationGrain">
+            <summary>
+            Validation grain interface
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IValidationGrain.ValidateAsync(System.Collections.Generic.List{AutonomousValidation.Core.Models.ExcelParameter},System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.Object}})">
+            <summary>
+            Validate Excel parameters against PDF content
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IValidationGrain.PerformSemanticMatchingAsync(System.String,System.String)">
+            <summary>
+            Perform semantic matching
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IValidationGrain.PerformExactMatchingAsync(System.Object,System.Object,AutonomousValidation.Core.Enums.DataType)">
+            <summary>
+            Perform exact matching
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Interfaces.IOCRProcessorGrain">
+            <summary>
+            Sub-agent interface for OCR processing
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IOCRProcessorGrain.ExtractTextAsync(System.Byte[])">
+            <summary>
+            Extract text from PDF using OCR
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Interfaces.IMultimodalProcessorGrain">
+            <summary>
+            Sub-agent interface for multimodal processing
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IMultimodalProcessorGrain.ProcessVisualContentAsync(System.Byte[])">
+            <summary>
+            Process visual content from PDF
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Interfaces.IModelManagerGrain">
+            <summary>
+            Model manager grain interface for Hugging Face model lifecycle
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IModelManagerGrain.LoadModelAsync(System.String,System.String)">
+            <summary>
+            Load ONNX model for inference
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IModelManagerGrain.UnloadModelAsync(System.String)">
+            <summary>
+            Unload model to free memory
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IModelManagerGrain.IsModelLoadedAsync(System.String)">
+            <summary>
+            Check if model is loaded and ready
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IModelManagerGrain.GetModelMemoryUsageAsync(System.String)">
+            <summary>
+            Get model memory usage
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IModelManagerGrain.RunInferenceAsync(System.String,AutonomousValidation.Core.Models.InferenceInput)">
+            <summary>
+            Perform inference using loaded model
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IModelManagerGrain.GetAvailableExecutionProvidersAsync">
+            <summary>
+            Get available execution providers
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IModelManagerGrain.SetExecutionProviderAsync(System.String)">
+            <summary>
+            Switch execution provider (CPU, CoreML, etc.)
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Interfaces.IAdaptiveGrain">
+            <summary>
+            Base interface for adaptive grains
+            </summary>
+        </member>
+        <member name="M:AutonomousValidation.Core.Interfaces.IAdaptiveGrain.AdaptToMemoryConstraintsAsync(AutonomousValidation.Core.Enums.MemoryThreshold)">
+            <summary>
+            Adapt grain behavior to memory constraints
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.InferenceInput">
+            <summary>
+            Input data for ML model inference
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.InferenceInput.InputType">
+            <summary>
+            Type of input data (image, text, etc.)
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.InferenceInput.Data">
+            <summary>
+            Raw input data
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.InferenceInput.Dimensions">
+            <summary>
+            Input dimensions if applicable
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.InferenceInput.Metadata">
+            <summary>
+            Additional metadata for preprocessing
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.InferenceResult">
+            <summary>
+            Result from ML model inference
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.InferenceResult.Success">
+            <summary>
+            Inference success status
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.InferenceResult.Outputs">
+            <summary>
+            Inference output data
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.InferenceResult.Confidence">
+            <summary>
+            Confidence scores for outputs
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.InferenceResult.ProcessingTimeMs">
+            <summary>
+            Processing time in milliseconds
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.InferenceResult.ErrorMessage">
+            <summary>
+            Error message if inference failed
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.InferenceResult.MemoryUsageBytes">
+            <summary>
+            Memory usage during inference
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.TableExtractionResult">
+            <summary>
+            Table extraction result from multimodal model
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.TableExtractionResult.Tables">
+            <summary>
+            Detected table boundaries
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.TableExtractionResult.TableContents">
+            <summary>
+            Extracted table contents
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.TableExtractionResult.OverallConfidence">
+            <summary>
+            Overall confidence score
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.TableExtractionResult.Metadata">
+            <summary>
+            Processing metadata
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.TableBoundary">
+            <summary>
+            Table boundary detection result
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.TableBoundary.TableId">
+            <summary>
+            Table identifier
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.TableBoundary.BoundingBox">
+            <summary>
+            Bounding box coordinates (x, y, width, height)
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.TableBoundary.Confidence">
+            <summary>
+            Confidence score for table detection
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.TableBoundary.EstimatedRows">
+            <summary>
+            Number of rows detected
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.TableBoundary.EstimatedColumns">
+            <summary>
+            Number of columns detected
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.TableContent">
+            <summary>
+            Extracted table content with structure
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.TableContent.TableId">
+            <summary>
+            Table identifier matching TableBoundary
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.TableContent.Cells">
+            <summary>
+            Table cells organized by row and column
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.TableContent.HeaderRows">
+            <summary>
+            Header row indices
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.TableContent.StructureConfidence">
+            <summary>
+            Table structure confidence
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.TableCell">
+            <summary>
+            Individual table cell content
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.TableCell.Text">
+            <summary>
+            Cell text content
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.TableCell.BoundingBox">
+            <summary>
+            Cell bounding box within table
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.TableCell.Confidence">
+            <summary>
+            Text extraction confidence
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.TableCell.RowSpan">
+            <summary>
+            Row span for merged cells
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.TableCell.ColumnSpan">
+            <summary>
+            Column span for merged cells
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.TableCell.CellType">
+            <summary>
+            Cell type (header, data, etc.)
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.ModelPerformanceMetrics">
+            <summary>
+            Model performance metrics
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.ModelPerformanceMetrics.AverageInferenceTimeMs">
+            <summary>
+            Average inference time in milliseconds
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.ModelPerformanceMetrics.PeakMemoryUsageBytes">
+            <summary>
+            Peak memory usage in bytes
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.ModelPerformanceMetrics.Accuracy">
+            <summary>
+            Model accuracy on test set
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.ModelPerformanceMetrics.TotalInferences">
+            <summary>
+            Total number of inferences performed
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.ModelPerformanceMetrics.FailedInferences">
+            <summary>
+            Number of failed inferences
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.ModelPerformanceMetrics.ExecutionProvider">
+            <summary>
+            Current execution provider
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.ModelPerformanceMetrics.ModelSizeBytes">
+            <summary>
+            Model size in bytes
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.ExcelParameter">
+            <summary>
+            Excel parameter extracted from spreadsheet
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.PDFProcessingResult">
+            <summary>
+            Result of PDF processing
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.ExcelProcessingResult">
+            <summary>
+            Result of Excel processing
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.ProcessingMetadata">
+            <summary>
+            Metadata about processing operations
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.ResourceStatus">
+            <summary>
+            Resource status information
+            </summary>
+        </member>
+        <member name="P:AutonomousValidation.Core.Models.ResourceStatus.AvailableMemoryGB">
+            <summary>
+            Available memory in GB for threshold calculations
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.ConsolidationRecommendation">
+            <summary>
+            Recommendation for agent consolidation
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.MemoryStatus">
+            <summary>
+            Memory status for monitoring
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.GrainMemoryUsage">
+            <summary>
+            Memory usage by individual grain
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.AgentDecision">
+            <summary>
+            Represents a decision made by an agent
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.PerformanceMetric">
+            <summary>
+            Represents a performance metric recorded by an agent
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.ResourceUsageSnapshot">
+            <summary>
+            Represents a snapshot of resource usage for an agent
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.AdaptationEvent">
+            <summary>
+            Represents an adaptation event where an agent changes its behavior
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.AgentBehaviorProfile">
+            <summary>
+            Behavior profile generated from telemetry data
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.BasicAgentStats">
+            <summary>
+            Basic statistics for an agent
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.ValidationRequest">
+            <summary>
+            Represents a validation request containing Excel and PDF files
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.ProcessingOptions">
+            <summary>
+            Configuration options for processing
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.ValidationResult">
+            <summary>
+            Result of the validation process
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.ParameterValidationResult">
+            <summary>
+            Validation result for a single parameter
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.MatchingResult">
+            <summary>
+            Result of a matching operation
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.MatchingStrategy">
+            <summary>
+            Matching strategy used for validation
+            </summary>
+        </member>
+        <member name="T:AutonomousValidation.Core.Models.ValidationSummary">
+            <summary>
+            Summary of validation results
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  # Orleans application for testing (without model-provider dependency)
+  orleans-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.orleans
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - MODEL_PATH=/models/huggingface
+      - EXECUTION_PROVIDER=CPUExecutionProvider
+      - USE_MOCK_MODELS=true
+    # Remove dependency on model-provider for testing
+    depends_on: []
+    volumes: []  # Don't mount external model volume, use built-in mocks
+    ports:
+      - "8080:8080"
+      - "11111:11111"
+      - "30000:30000"
+    networks:
+      - orleans-network
+
+networks:
+  orleans-network:
+    driver: bridge

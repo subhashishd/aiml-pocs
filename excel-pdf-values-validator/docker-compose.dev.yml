@@ -1,0 +1,173 @@
+# docker-compose.dev.yml - Celery-based Autonomous Validation Agents Development Setup
+
+services:
+  # Redis - Message broker for Celery agents
+  redis:
+    image: redis:7-alpine
+    container_name: redis-dev
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - agents-net
+    restart: unless-stopped
+
+  # PostgreSQL with pgvector for embeddings
+  postgres:
+    image: ankane/pgvector
+    container_name: pgvector-db-dev
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: validation_agents
+    volumes:
+      - pgdata_dev:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - agents-net
+
+  # InfluxDB for agent telemetry and metrics
+  influxdb:
+    image: influxdb:2.7-alpine
+    container_name: influxdb-dev
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: admin
+      DOCKER_INFLUXDB_INIT_PASSWORD: password123
+      DOCKER_INFLUXDB_INIT_ORG: validation-agents
+      DOCKER_INFLUXDB_INIT_BUCKET: agent-metrics
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb_data:/var/lib/influxdb2
+    networks:
+      - agents-net
+    restart: unless-stopped
+
+  # FastAPI Gateway
+  web:
+    build: 
+      context: ./fastapi
+      dockerfile: Dockerfile
+    container_name: fastapi-gateway-dev
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+      - postgres
+      - influxdb
+    environment:
+      # Database
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/validation_agents
+      # Redis & Celery
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/1
+      # ML Models
+      - SENTENCE_TRANSFORMERS_HOME=/app/models
+      - TRANSFORMERS_CACHE=/app/models
+      - HF_HOME=/app/models
+      - USE_MULTIMODAL_PDF=true
+      - USE_OPTIMIZED_MULTIMODAL=true
+      - USE_LIGHTWEIGHT_MODEL=true
+      # Memory Management
+      - MAX_MEMORY_GB=8
+      - MEMORY_SAFETY_MARGIN=0.15
+      - UNLOAD_MODELS_AFTER_PROCESSING=true
+    volumes:
+      - ./data:/app/data
+      - model_cache:/app/models
+      - ./fastapi:/app
+    networks:
+      - agents-net
+    restart: unless-stopped
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  # Celery Worker - Autonomous Agents
+  celery-worker:
+    build:
+      context: ./fastapi
+      dockerfile: Dockerfile
+    container_name: celery-worker-dev
+    depends_on:
+      - redis
+      - postgres
+    environment:
+      # Database
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/validation_agents
+      # Redis & Celery
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/1
+      # ML Models
+      - SENTENCE_TRANSFORMERS_HOME=/app/models
+      - TRANSFORMERS_CACHE=/app/models
+      - HF_HOME=/app/models
+      - USE_MULTIMODAL_PDF=true
+      - USE_OPTIMIZED_MULTIMODAL=true
+      # Memory Management
+      - MAX_MEMORY_GB=8
+      - MEMORY_SAFETY_MARGIN=0.15
+    volumes:
+      - ./data:/app/data
+      - model_cache:/app/models
+      - ./fastapi:/app
+    networks:
+      - agents-net
+    restart: unless-stopped
+    command: celery -A app.celery_agents worker --loglevel=info --concurrency=4
+
+  # Celery Beat - Scheduled agent tasks
+  celery-beat:
+    build:
+      context: ./fastapi
+      dockerfile: Dockerfile
+    container_name: celery-beat-dev
+    depends_on:
+      - redis
+      - postgres
+    environment:
+      # Database
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/validation_agents
+      # Redis & Celery
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/1
+    volumes:
+      - ./fastapi:/app
+    networks:
+      - agents-net
+    restart: unless-stopped
+    command: celery -A app.celery_agents beat --loglevel=info
+
+  # Flower - Celery monitoring dashboard
+  flower:
+    build:
+      context: ./fastapi
+      dockerfile: Dockerfile
+    container_name: flower-dev
+    ports:
+      - "5555:5555"
+    depends_on:
+      - redis
+    environment:
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/1
+    networks:
+      - agents-net
+    restart: unless-stopped
+    command: celery -A app.celery_agents flower --port=5555
+
+networks:
+  agents-net:
+    driver: bridge
+
+volumes:
+  redis_data:
+  pgdata_dev:
+  influxdb_data:
+  model_cache:

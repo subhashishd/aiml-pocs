@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  redis-test:
+    image: redis:7-alpine
+    container_name: redis-test
+    ports:
+      - "6380:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-test-data:/data
+    networks:
+      - test-network
+
+  celery-worker-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: celery-worker-test
+    command: celery -A app.autonomous_agents.worker worker --loglevel=info --concurrency=2
+    environment:
+      - CELERY_BROKER_URL=redis://redis-test:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis-test:6379/0
+      - PYTHONPATH=/app
+    volumes:
+      - .:/app
+    depends_on:
+      - redis-test
+    networks:
+      - test-network
+
+  celery-beat-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: celery-beat-test
+    command: celery -A app.autonomous_agents.worker beat --loglevel=info
+    environment:
+      - CELERY_BROKER_URL=redis://redis-test:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis-test:6379/0
+      - PYTHONPATH=/app
+    volumes:
+      - .:/app
+    depends_on:
+      - redis-test
+    networks:
+      - test-network
+
+volumes:
+  redis-test-data:
+
+networks:
+  test-network:
+    driver: bridge

@@ -1,0 +1,304 @@
+# Azure DevOps Pipeline for Autonomous Validation Agents
+# Features: Build, Test, Quality Gates, Security Scan, Container Build, Deploy to Oracle VM
+
+name: $(Build.DefinitionName)-$(Date:yyyyMMdd)-$(Rev:r)
+
+trigger:
+  branches:
+    include:
+      - main
+      - develop
+      - feature/*
+      - hotfix/*
+  paths:
+    exclude:
+      - README.md
+      - docs/**
+      - .gitignore
+
+pr:
+  branches:
+    include:
+      - main
+      - develop
+  paths:
+    exclude:
+      - README.md
+      - docs/**
+      - .gitignore
+
+# Pipeline Variables (Configure in Azure DevOps)
+variables:
+  # Build Configuration
+  - name: BuildConfiguration
+    value: 'Release'
+  - name: DotNetVersion
+    value: '9.0.x'
+  - name: DOTNET_SKIP_FIRST_TIME_EXPERIENCE
+    value: 'true'
+  - name: DOTNET_CLI_TELEMETRY_OPTOUT
+    value: 'true'
+  
+  # Container Registry
+  - name: ContainerRegistry
+    value: 'ghcr.io'
+  - name: ImageRepository
+    value: 'autonomous-validation-agents'
+  - name: ImageTag
+    value: '$(Build.BuildId)'
+  
+  # Quality Gates
+  - name: CodeCoverageThreshold
+    value: '80'
+  - name: SonarQubeEnabled
+    value: 'true'
+  
+# Variable Groups (Define in Azure DevOps)
+# - group: 'deployment-secrets'      # Contains deployment credentials
+# - group: 'sonarqube-config'       # Contains SonarQube settings
+# - group: 'container-registry'     # Contains container registry settings
+
+# Required Service Connections (Configure in Azure DevOps Project Settings):
+# - $(GitHubContainerRegistryConnection)  # GitHub Container Registry service connection
+# - $(OracleVMConnection)                  # Oracle VM SSH service connection
+# - $(SonarQubeConnection)                 # SonarQube service connection
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: 'Build & Quality Analysis'
+  jobs:
+  - job: BuildAndTest
+    displayName: 'Build, Test, and Code Analysis'
+    timeoutInMinutes: 30
+    steps:
+    
+    # Setup .NET
+    - task: UseDotNet@2
+      displayName: 'Use .NET $(DotNetVersion)'
+      inputs:
+        packageType: 'sdk'
+        version: '$(DotNetVersion)'
+        includePreviewVersions: false
+    
+    # Cache NuGet packages
+    - task: Cache@2
+      displayName: 'Cache NuGet packages'
+      inputs:
+        key: 'nuget | "$(Agent.OS)" | **/packages.lock.json,!**/bin/**,!**/obj/**'
+        restoreKeys: |
+          nuget | "$(Agent.OS)"
+        path: '$(NUGET_PACKAGES)'
+    
+    # Restore dependencies
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore NuGet packages'
+      inputs:
+        command: 'restore'
+        projects: '**/*.csproj'
+        feedsToUse: 'select'
+        verbosityRestore: 'minimal'
+    
+    # Static Analysis - .NET Analyzers
+    - task: DotNetCoreCLI@2
+      displayName: 'Run Static Code Analysis'
+      inputs:
+        command: 'build'
+        projects: '**/*.sln'
+        arguments: '--configuration $(BuildConfiguration) --verbosity normal /p:TreatWarningsAsErrors=true'
+    
+    # Build solution
+    - task: DotNetCoreCLI@2
+      displayName: 'Build Solution'
+      inputs:
+        command: 'build'
+        projects: '**/*.sln'
+        arguments: '--configuration $(BuildConfiguration) --no-restore --verbosity minimal'
+    
+    # Run Unit Tests with Coverage
+    - task: DotNetCoreCLI@2
+      displayName: 'Run Unit Tests'
+      inputs:
+        command: 'test'
+        projects: '**/AutonomousValidation.Tests.Unit.csproj'
+        arguments: >
+          --configuration $(BuildConfiguration)
+          --no-build
+          --logger trx
+          --logger "console;verbosity=normal"
+          --results-directory $(Agent.TempDirectory)
+          --collect:"XPlat Code Coverage"
+          --settings coverlet.runsettings
+          /p:CoverletOutputFormat=opencover
+          /p:CoverletOutput=$(Agent.TempDirectory)/coverage/
+          /p:Threshold=$(CodeCoverageThreshold)
+        publishTestResults: true
+    
+    # Run Integration Tests
+    - task: DotNetCoreCLI@2
+      displayName: 'Run Integration Tests'
+      inputs:
+        command: 'test'
+        projects: '**/AutonomousValidation.Tests.Integration.csproj'
+        arguments: >
+          --configuration $(BuildConfiguration)
+          --no-build
+          --logger trx
+          --logger "console;verbosity=normal"
+          --results-directory $(Agent.TempDirectory)
+        publishTestResults: true
+    
+    # Generate Code Coverage Report
+    - task: PublishCodeCoverageResults@1
+      displayName: 'Publish Code Coverage'
+      inputs:
+        codeCoverageTool: 'Cobertura'
+        summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
+        reportDirectory: '$(Agent.TempDirectory)/coverage/reports'
+        failIfCoverageEmpty: true
+    
+    # Security Scan - Free Tool (OWASP and Built-in .NET)
+    - task: dependency-check-build-task@6
+      displayName: 'OWASP Dependency Check'
+      inputs:
+        projectName: 'autonomous-validation-agents'
+        scanPath: '$(System.DefaultWorkingDirectory)'
+        format: 'ALL'
+        additionalArguments: '--enableRetired --enableExperimental'
+    
+    # Publish Build Artifacts
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish Application'
+      inputs:
+        command: 'publish'
+        publishWebProjects: false
+        projects: 'src/**/*.csproj'
+        arguments: >
+          --configuration $(BuildConfiguration)
+          --no-build
+          --output $(Build.ArtifactStagingDirectory)/app
+          --verbosity minimal
+    
+    # Copy deployment scripts
+    - task: CopyFiles@2
+      displayName: 'Copy Deployment Scripts'
+      inputs:
+        sourceFolder: '.azuredevops'
+        contents: |
+          deployment/**
+          docker/**
+        targetFolder: '$(Build.ArtifactStagingDirectory)'
+    
+    # Publish Artifacts
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Build Artifacts'
+      inputs:
+        pathToPublish: '$(Build.ArtifactStagingDirectory)'
+        artifactName: 'drop'
+        publishLocation: 'Container'
+
+- stage: ContainerBuild
+  displayName: 'Container Build & Push'
+  dependsOn: Build
+  condition: and(succeeded(), in(variables['Build.SourceBranch'], 'refs/heads/main', 'refs/heads/develop'))
+  jobs:
+  - job: BuildContainer
+    displayName: 'Build and Push Container Images'
+    steps:
+    
+    # Download build artifacts
+    - task: DownloadBuildArtifacts@1
+      displayName: 'Download Build Artifacts'
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'drop'
+        downloadPath: '$(System.ArtifactsDirectory)'
+    
+    # Login to GitHub Container Registry
+    - task: Docker@2
+      displayName: 'Login to GitHub Container Registry'
+      inputs:
+        containerRegistry: '$(GitHubContainerRegistryConnection)'
+        command: 'login'
+    
+    # Build and Push Orleans Silo Image
+    - task: Docker@2
+      displayName: 'Build Orleans Silo Image'
+      inputs:
+        containerRegistry: '$(GitHubContainerRegistryConnection)'
+        repository: '$(ImageRepository)/orleans-silo'
+        command: 'buildAndPush'
+        Dockerfile: '.azuredevops/docker/Dockerfile.silo'
+        buildContext: '$(System.ArtifactsDirectory)/drop'
+        tags: |
+          $(ImageTag)
+          latest
+        arguments: >
+          --build-arg BUILD_BUILDNUMBER=$(Build.BuildNumber)
+          --build-arg BUILD_SOURCEVERSION=$(Build.SourceVersion)
+    
+    # Build and Push API Gateway Image (when we add it)
+    - task: Docker@2
+      displayName: 'Build API Gateway Image'
+      condition: false  # Enable when API Gateway is added
+      inputs:
+        containerRegistry: '$(GitHubContainerRegistryConnection)'
+        repository: '$(ImageRepository)/api-gateway'
+        command: 'buildAndPush'
+        Dockerfile: '.azuredevops/docker/Dockerfile.gateway'
+        buildContext: '$(System.ArtifactsDirectory)/drop'
+        tags: |
+          $(ImageTag)
+          latest
+    
+    # Container Security Scan
+    - task: trivy@1
+      displayName: 'Container Security Scan'
+      inputs:
+        version: 'latest'
+        docker: false
+        image: '$(ContainerRegistry)/$(ImageRepository)/orleans-silo:$(ImageTag)'
+        options: '--exit-code 1 --severity HIGH,CRITICAL'
+
+- stage: DeployDev
+  displayName: 'Deploy to Development'
+  dependsOn: ContainerBuild
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+  variables:
+  - group: 'dev-deployment-secrets'
+  jobs:
+  - deployment: DeployToOracleVM
+    displayName: 'Deploy to Oracle VM - Development'
+    environment: 'development'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: .azuredevops/deployment/deploy-to-oracle-vm.yml
+            parameters:
+              environment: 'dev'
+              imageTag: '$(ImageTag)'
+              oracleVMConnection: '$(OracleVMConnection)'
+
+- stage: DeployProd
+  displayName: 'Deploy to Production'
+  dependsOn: ContainerBuild
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  variables:
+  - group: 'prod-deployment-secrets'
+  jobs:
+  - deployment: DeployToOracleVM
+    displayName: 'Deploy to Oracle VM - Production'
+    environment: 'production'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: .azuredevops/deployment/deploy-to-oracle-vm.yml
+            parameters:
+              environment: 'prod'
+              imageTag: '$(ImageTag)'
+              oracleVMConnection: '$(OracleVMConnection)'

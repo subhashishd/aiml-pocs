@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # Model container with converted ONNX models
+  model-provider:
+    build:
+      context: ./docker/model-converter
+      dockerfile: Dockerfile
+      target: model-runtime
+    container_name: huggingface-models
+    volumes:
+      - model-volume:/models
+    healthcheck:
+      test: ["CMD", "test", "-f", "/models/huggingface/table-structure-recognition/model.onnx"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - orleans-network
+
+  # Orleans application with model access
+  orleans-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.orleans
+    container_name: autonomous-validation-orleans
+    depends_on:
+      model-provider:
+        condition: service_healthy
+    volumes:
+      - model-volume:/models:ro  # Read-only access to models
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - MODEL_PATH=/models/huggingface
+      - EXECUTION_PROVIDER=CPUExecutionProvider
+    ports:
+      - "8080:8080"
+      - "11111:11111"  # Orleans silo port
+      - "30000:30000"  # Orleans gateway port
+    networks:
+      - orleans-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  model-volume:
+    driver: local
+
+networks:
+  orleans-network:
+    driver: bridge

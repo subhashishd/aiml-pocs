@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "dgSpecHash": "ZH9SEvi6Nsg=",
+  "success": true,
+  "projectFilePath": "/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/research/huggingface-integration/HuggingFaceResearch/HuggingFaceResearch.csproj",
+  "expectedPackageFiles": [
+    "/Users/subhashishdas/.nuget/packages/asyncfixer/1.6.0/asyncfixer.1.6.0.nupkg.sha512",
+    "/Users/subhashishdas/.nuget/packages/errorprone.net.coreanalyzers/0.1.2/errorprone.net.coreanalyzers.0.1.2.nupkg.sha512",
+    "/Users/subhashishdas/.nuget/packages/errorprone.net.structs/0.1.2/errorprone.net.structs.0.1.2.nupkg.sha512",
+    "/Users/subhashishdas/.nuget/packages/google.protobuf/3.27.1/google.protobuf.3.27.1.nupkg.sha512",
+    "/Users/subhashishdas/.nuget/packages/microsoft.codeanalysis.analyzers/3.3.4/microsoft.codeanalysis.analyzers.3.3.4.nupkg.sha512",
+    "/Users/subhashishdas/.nuget/packages/microsoft.codeanalysis.bannedapianalyzers/3.3.4/microsoft.codeanalysis.bannedapianalyzers.3.3.4.nupkg.sha512",
+    "/Users/subhashishdas/.nuget/packages/microsoft.codeanalysis.netanalyzers/8.0.0/microsoft.codeanalysis.netanalyzers.8.0.0.nupkg.sha512",
+    "/Users/subhashishdas/.nuget/packages/microsoft.codeanalysis.publicapianalyzers/3.3.4/microsoft.codeanalysis.publicapianalyzers.3.3.4.nupkg.sha512",
+    "/Users/subhashishdas/.nuget/packages/microsoft.ml.onnxruntime/1.22.1/microsoft.ml.onnxruntime.1.22.1.nupkg.sha512",
+    "/Users/subhashishdas/.nuget/packages/microsoft.ml.onnxruntime.managed/1.22.1/microsoft.ml.onnxruntime.managed.1.22.1.nupkg.sha512",
+    "/Users/subhashishdas/.nuget/packages/microsoft.ml.tokenizers/1.0.2/microsoft.ml.tokenizers.1.0.2.nupkg.sha512",
+    "/Users/subhashishdas/.nuget/packages/microsoft.visualstudio.threading.analyzers/17.8.14/microsoft.visualstudio.threading.analyzers.17.8.14.nupkg.sha512",
+    "/Users/subhashishdas/.nuget/packages/securitycodescan.vs2019/5.6.7/securitycodescan.vs2019.5.6.7.nupkg.sha512",
+    "/Users/subhashishdas/.nuget/packages/stylecop.analyzers/1.1.118/stylecop.analyzers.1.1.118.nupkg.sha512",
+    "/Users/subhashishdas/.nuget/packages/system.memory/4.5.5/system.memory.4.5.5.nupkg.sha512",
+    "/Users/subhashishdas/.nuget/packages/system.numerics.tensors/9.0.0/system.numerics.tensors.9.0.0.nupkg.sha512",
+    "/Users/subhashishdas/.nuget/packages/system.text.json/8.0.5/system.text.json.8.0.5.nupkg.sha512"
+  ],
+  "logs": []
+}

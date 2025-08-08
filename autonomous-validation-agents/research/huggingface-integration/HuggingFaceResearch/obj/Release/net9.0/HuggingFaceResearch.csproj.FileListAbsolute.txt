@@ -1,0 +1,6 @@
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/research/huggingface-integration/HuggingFaceResearch/obj/Release/net9.0/HuggingFaceResearch.csproj.AssemblyReference.cache
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/research/huggingface-integration/HuggingFaceResearch/obj/Release/net9.0/HuggingFaceResearch.GeneratedMSBuildEditorConfig.editorconfig
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/research/huggingface-integration/HuggingFaceResearch/obj/Release/net9.0/HuggingFaceResearch.AssemblyInfoInputs.cache
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/research/huggingface-integration/HuggingFaceResearch/obj/Release/net9.0/HuggingFaceResearch.AssemblyInfo.cs
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/research/huggingface-integration/HuggingFaceResearch/obj/Release/net9.0/HuggingFaceResearch.csproj.CoreCompileInputs.cache
+/Users/subhashishdas/aiml-pocs/autonomous-validation-agents/research/huggingface-integration/HuggingFaceResearch/obj/Release/net9.0/HuggingFaceResearch.xml

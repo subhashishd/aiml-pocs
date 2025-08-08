@@ -1,0 +1,103 @@
+{
+  "health": {
+    "status": "healthy",
+    "timestamp": "2024-01-15T10:30:00Z",
+    "version": "1.0.0"
+  },
+  "dashboard": {
+    "totalTasks": 42,
+    "completedTasks": 38,
+    "failedTasks": 2,
+    "pendingTasks": 2,
+    "accuracy": 95.2,
+    "processingTime": 3.4
+  },
+  "recentTasks": [
+    {
+      "id": "task_001",
+      "filename": "financial_report.pdf",
+      "status": "completed",
+      "file_type": "pdf",
+      "created_at": "2024-01-15T10:25:00Z",
+      "accuracy": 98.5,
+      "processing_time": 2.3
+    },
+    {
+      "id": "task_002", 
+      "filename": "data_export.xlsx",
+      "status": "completed",
+      "file_type": "xlsx",
+      "created_at": "2024-01-15T10:20:00Z",
+      "accuracy": 96.7,
+      "processing_time": 1.8
+    },
+    {
+      "id": "task_003",
+      "filename": "quarterly_data.pdf",
+      "status": "failed",
+      "file_type": "pdf",
+      "created_at": "2024-01-15T10:15:00Z",
+      "accuracy": null,
+      "processing_time": 0.5,
+      "error": "File format not supported"
+    }
+  ],
+  "uploadResponse": {
+    "task_id": "task_new_001",
+    "status": "accepted",
+    "filename": "test_file.pdf",
+    "message": "File uploaded successfully and queued for processing"
+  },
+  "validationResults": {
+    "task_id": "task_001",
+    "status": "completed",
+    "accuracy": 98.5,
+    "processing_time": 2.3,
+    "results": {
+      "total_fields": 25,
+      "validated_fields": 24,
+      "errors": 1,
+      "warnings": 2,
+      "confidence_score": 0.985
+    },
+    "detailed_results": [
+      {
+        "field": "invoice_number",
+        "expected": "INV-2024-001",
+        "actual": "INV-2024-001",
+        "match": true,
+        "confidence": 0.99
+      },
+      {
+        "field": "total_amount",
+        "expected": "1250.00",
+        "actual": "1250.00",
+        "match": true,
+        "confidence": 0.98
+      }
+    ]
+  },
+  "systemStatus": {
+    "api": {
+      "status": "healthy",
+      "response_time": 125,
+      "uptime": "99.9%"
+    },
+    "database": {
+      "status": "healthy",
+      "connections": 5,
+      "max_connections": 100
+    },
+    "celery": {
+      "status": "healthy",
+      "active_tasks": 3,
+      "pending_tasks": 1,
+      "workers": 4
+    },
+    "redis": {
+      "status": "healthy",
+      "memory_usage": "45%",
+      "connected_clients": 8
+    }
+  }
+}

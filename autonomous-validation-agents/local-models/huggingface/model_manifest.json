@@ -1,0 +1,36 @@
+{
+  "conversion_info": {
+    "timestamp": "2025-07-25T11:20:00Z",
+    "torch_version": "2.7.1",
+    "target_runtime": "Microsoft.ML.OnnxRuntime",
+    "optimization": "CPU-optimized"
+  },
+  "models": {
+    "table-structure-recognition": {
+      "description": "Table structure detection and cell boundary recognition",
+      "hf_source": "microsoft/table-transformer-structure-recognition",
+      "onnx_path": "local-models/huggingface/table-structure-recognition/model.onnx",
+      "size_bytes": 115811069,
+      "size_mb": 110.45,
+      "input_size": [
+        3,
+        800,
+        800
+      ],
+      "status": "ready"
+    },
+    "table-detection": {
+      "description": "Table detection within documents",
+      "hf_source": "microsoft/table-transformer-detection",
+      "onnx_path": "local-models/huggingface/table-detection/model.onnx",
+      "size_bytes": 115694315,
+      "size_mb": 110.33,
+      "input_size": [
+        3,
+        800,
+        800
+      ],
+      "status": "ready"
+    }
+  }
+}

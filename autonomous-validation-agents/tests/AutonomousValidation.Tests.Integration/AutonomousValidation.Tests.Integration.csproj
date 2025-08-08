@@ -1,0 +1,73 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <WarningsNotAsErrors>NU1701</WarningsNotAsErrors>
+
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    
+    <!-- Integration Test Timeout -->
+    <TestTimeout>300000</TestTimeout>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Test Framework -->
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    
+    <!-- Code Coverage -->
+    <PackageReference Include="coverlet.collector" Version="6.0.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    
+    <!-- Test Utilities -->
+    <PackageReference Include="FluentAssertions" Version="6.12.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Bogus" Version="35.4.0" />
+    
+    <!-- Orleans Integration Testing -->
+    <PackageReference Include="Microsoft.Orleans.TestingHost" Version="8.2.0" />
+    <PackageReference Include="Microsoft.Orleans.Server" Version="8.2.0" />
+    
+    <!-- ASP.NET Core Testing -->
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
+    
+    <!-- Container Testing -->
+    <PackageReference Include="Testcontainers" Version="3.6.0" />
+    
+    <!-- Performance and Load Testing -->
+    <PackageReference Include="NBomber" Version="5.1.0" />
+    <PackageReference Include="NBomber.Http" Version="5.1.0" />
+    
+    <!-- Test Data -->
+    <PackageReference Include="AutoFixture" Version="4.18.1" />
+    
+    <!-- Memory Profiling -->
+    <PackageReference Include="Microsoft.Diagnostics.NETCore.Client" Version="0.2.532401" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <!-- Project References -->
+    <ProjectReference Include="../../src/AutonomousValidation.Core/AutonomousValidation.Core.csproj" />
+    <ProjectReference Include="../../src/AutonomousValidation.Orleans/AutonomousValidation.Orleans.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+    <Using Include="FluentAssertions" />
+    <Using Include="AutoFixture" />
+    <Using Include="Microsoft.Orleans.TestingHost" />
+  </ItemGroup>
+
+</Project>
