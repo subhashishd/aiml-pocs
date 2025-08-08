@@ -7,6 +7,90 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 2025-08-08
+
+### Added - Semantic Duplicate Detection System 🧠
+- 🔥 **BREAKTHROUGH**: Revolutionary multi-level duplicate detection combining binary and semantic analysis
+- ✨ **Level 1 Detection**: Lightning-fast SHA256 hash-based exact file duplicate detection
+- ✨ **Level 2 Detection**: Semantic content analysis using vector embeddings for intelligent content matching
+- ✨ **Vector Similarity Search**: 384-dimensional embeddings with pgvector-powered similarity queries
+- ✨ **Content Signatures**: Intelligent content fingerprinting with parameter counting and summarization
+- ✨ **Smart Thresholds**: 95% similarity threshold with ±5 parameter count tolerance for flexible matching
+- ✨ **Cross-Format Detection**: Detects semantically identical content across different file formats and structures
+
+### Changed - Advanced Duplicate Detection Logic
+- 🧠 **Revolutionary Enhancement**: Replaced simple file-based duplication with sophisticated content-aware system
+- Multi-stage validation pipeline: exact files → semantic content → processing
+- Enhanced duplicate response messages with similarity scores and match details
+- Intelligent content summarization for human-readable duplicate explanations
+- Advanced parameter extraction and statistical analysis for content comparison
+
+### Performance - Massive Intelligence Gains 🚀
+- ⚡ **GAME CHANGER**: Prevents redundant processing of semantically identical content even with different filenames
+- Smart deduplication saves significant compute resources for similar documents
+- Vector-based similarity search provides sub-second semantic duplicate detection
+- Comprehensive caching system for both binary and semantic signatures
+
+### Technical Details - Semantic Detection Architecture 🔧
+
+#### New Database Schema:
+```sql
+CREATE TABLE content_signatures (
+    id SERIAL PRIMARY KEY,
+    config_id TEXT NOT NULL,
+    pdf_filename TEXT NOT NULL,
+    excel_filename TEXT NOT NULL,
+    content_embedding VECTOR(384),     -- Semantic fingerprint
+    parameter_count INTEGER,           -- Parameter validation
+    avg_similarity FLOAT,              -- Validation accuracy
+    content_summary TEXT,              -- Human-readable summary
+    created_at TIMESTAMP DEFAULT NOW()
+);
+CREATE INDEX content_signatures_embedding_idx ON content_signatures 
+USING ivfflat (content_embedding vector_cosine_ops) WITH (lists = 50);
+```
+
+#### Semantic Detection Functions Added:
+- `check_semantic_duplicate()`: Vector similarity matching with configurable thresholds
+- `store_content_signature()`: Content fingerprint storage with metadata
+- `get_content_summary_embedding()`: Intelligent embedding generation from all PDF chunks
+- `generate_content_summary()`: Statistical content analysis and summarization
+
+#### Enhanced API Responses:
+```json
+{
+  "status": "duplicate_detected",
+  "duplicate_type": "semantic_content",
+  "similarity_score": 0.97,
+  "similar_to": {
+    "pdf_filename": "original.pdf",
+    "parameter_count": 42,
+    "content_summary": "Parameters: 42, Key params: Volume, Mass..."
+  }
+}
+```
+
+#### Detection Scenarios Now Handled:
+- ✅ Same content with different filenames → **SEMANTIC DUPLICATE DETECTED**
+- ✅ Identical parameters with minor formatting differences → **DETECTED**
+- ✅ Same data in different Excel templates/layouts → **DETECTED**
+- ✅ Content with 1-2 parameter variations (within tolerance) → **DETECTED**
+- ✅ PDF with same parameters but different visual layout → **DETECTED**
+- ❌ Completely different content → **NOT DETECTED** (processes normally)
+
+#### Files Enhanced:
+- `fastapi/app/models/database.py`: Added semantic duplicate detection functions and content_signatures table
+- `fastapi/app/main.py`: Implemented two-level duplicate detection pipeline in /validate endpoint
+- Database initialization now includes vector similarity indices for performance
+
+#### Advanced Features:
+- **Content Embedding**: Averages embeddings from all PDF chunks for semantic fingerprint
+- **Parameter Analysis**: Extracts and counts parameters with statistical validation
+- **Similarity Scoring**: Uses cosine similarity for semantic content matching
+- **Intelligent Summaries**: Generates human-readable content descriptions
+- **Flexible Thresholds**: Configurable similarity percentages and parameter tolerances
+- **Detailed Logging**: Comprehensive duplicate detection reporting and debugging
+
 ## [1.0.1] - 2025-08-08
 
 ### Added - Comprehensive E2E Testing & Stability Fixes
