@@ -175,12 +175,12 @@ async def validate_values(
         pdf_hash = hashlib.sha256(pdf_content).hexdigest()
         excel_hash = hashlib.sha256(excel_content).hexdigest()
         
-        # Check for duplicate files
+        # Level 1: Check for exact file duplicates (fast)
         from .models.database import check_duplicate_files, store_file_hashes
         existing_config_id = await check_duplicate_files(pdf_hash, excel_hash)
         
         if existing_config_id:
-            logger.info(f"Duplicate files detected. Using existing config_id: {existing_config_id}")
+            logger.info(f"Exact duplicate files detected. Using existing config_id: {existing_config_id}")
             # Get existing validation results
             from .models.database import get_chunks_by_config
             pdf_chunks = await get_chunks_by_config(existing_config_id)
@@ -189,11 +189,12 @@ async def validate_values(
                 # Return cached results with duplicate detection message
                 return {
                     "status": "duplicate_detected",
-                    "message": f"These files have been processed before. Using cached results from config_id: {existing_config_id}",
+                    "message": f"These exact files have been processed before. Using cached results from config_id: {existing_config_id}",
                     "config_id": existing_config_id,
                     "pdf_filename": pdf_file.filename,
                     "excel_filename": excel_file.filename,
-                    "note": "This is a duplicate upload. No new processing was performed."
+                    "duplicate_type": "exact_files",
+                    "note": "This is an exact duplicate upload. No new processing was performed."
                 }
         
         # Save uploaded files temporarily
@@ -215,12 +216,50 @@ async def validate_values(
             if not excel_data:
                 raise HTTPException(status_code=400, detail="No parameter-value pairs found in Excel")
             
-            # Create temporary embeddings for this validation
+            # Level 2: Check for semantic duplicates before processing (slower but more comprehensive)
+            from .models.database import (check_semantic_duplicate, store_content_signature, 
+                                        get_content_summary_embedding, generate_content_summary)
+            
+            # Create temporary embeddings to check for semantic duplicates
             config_id = await embedding_service.create_embeddings(
                 chunks=pdf_chunks,
                 filename=pdf_file.filename,
                 pdf_path=temp_pdf_path
             )
+            
+            # Generate content signature for semantic duplicate detection
+            content_embedding = await get_content_summary_embedding(pdf_chunks)
+            parameter_count = len(excel_data) if excel_data else 0
+            
+            # Check for semantic duplicates with 95% similarity threshold
+            semantic_duplicate = await check_semantic_duplicate(
+                content_embedding=content_embedding,
+                parameter_count=parameter_count,
+                similarity_threshold=0.95
+            )
+            
+            if semantic_duplicate:
+                similarity_score = semantic_duplicate['similarity_score']
+                existing_config_id = semantic_duplicate['config_id']
+                logger.info(f"Semantic duplicate detected with {similarity_score:.1%} similarity. Using existing config_id: {existing_config_id}")
+                
+                # Return cached results with semantic duplicate detection message
+                return {
+                    "status": "duplicate_detected",
+                    "message": f"Semantically similar content detected ({similarity_score:.1%} similarity). Using cached results from config_id: {existing_config_id}",
+                    "config_id": existing_config_id,
+                    "pdf_filename": pdf_file.filename,
+                    "excel_filename": excel_file.filename,
+                    "duplicate_type": "semantic_content",
+                    "similarity_score": similarity_score,
+                    "similar_to": {
+                        "pdf_filename": semantic_duplicate['pdf_filename'],
+                        "excel_filename": semantic_duplicate['excel_filename'],
+                        "parameter_count": semantic_duplicate['parameter_count'],
+                        "content_summary": semantic_duplicate['content_summary']
+                    },
+                    "note": "This content is semantically similar to previously processed files. No new processing was performed."
+                }
             
             # Perform validation
             validation_result = await validation_service.validate_values(
@@ -233,6 +272,21 @@ async def validate_values(
             # Store file hashes for future duplicate detection
             await store_file_hashes(config_id, pdf_hash, excel_hash, pdf_file.filename, excel_file.filename)
             logger.info(f"Stored file hashes for config_id: {config_id}")
+            
+            # Store content signature for future semantic duplicate detection
+            content_summary = await generate_content_summary(pdf_chunks)
+            avg_similarity = validation_result['summary']['accuracy'] if validation_result.get('summary') else 0.0
+            
+            await store_content_signature(
+                config_id=config_id,
+                pdf_filename=pdf_file.filename,
+                excel_filename=excel_file.filename,
+                content_embedding=content_embedding,
+                parameter_count=parameter_count,
+                avg_similarity=avg_similarity,
+                content_summary=content_summary
+            )
+            logger.info(f"Stored content signature for config_id: {config_id}")
             
             # Generate result file
             result_filename = f"validation_result_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
