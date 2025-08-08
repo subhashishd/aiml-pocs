@@ -294,7 +294,7 @@ class OptimizedMultimodalPDFProcessor:
                 chunk_text += f" {unit}"
             
             chunk = {
-                'text': chunk_text,
+                'chunk_text': chunk_text,
                 'parameter': parameter,
                 'value': value,
                 'unit': unit,

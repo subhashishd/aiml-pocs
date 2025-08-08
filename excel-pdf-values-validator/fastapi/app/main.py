@@ -166,14 +166,42 @@ async def validate_values(
         if not excel_file.filename.lower().endswith(('.xlsx', '.xls')):
             raise HTTPException(status_code=400, detail="Excel file must have .xlsx or .xls extension")
         
+        # Read file contents for duplicate detection
+        pdf_content = await pdf_file.read()
+        excel_content = await excel_file.read()
+        
+        # Calculate file hashes for duplicate detection
+        import hashlib
+        pdf_hash = hashlib.sha256(pdf_content).hexdigest()
+        excel_hash = hashlib.sha256(excel_content).hexdigest()
+        
+        # Check for duplicate files
+        from .models.database import check_duplicate_files, store_file_hashes
+        existing_config_id = await check_duplicate_files(pdf_hash, excel_hash)
+        
+        if existing_config_id:
+            logger.info(f"Duplicate files detected. Using existing config_id: {existing_config_id}")
+            # Get existing validation results
+            from .models.database import get_chunks_by_config
+            pdf_chunks = await get_chunks_by_config(existing_config_id)
+            
+            if pdf_chunks:
+                # Return cached results with duplicate detection message
+                return {
+                    "status": "duplicate_detected",
+                    "message": f"These files have been processed before. Using cached results from config_id: {existing_config_id}",
+                    "config_id": existing_config_id,
+                    "pdf_filename": pdf_file.filename,
+                    "excel_filename": excel_file.filename,
+                    "note": "This is a duplicate upload. No new processing was performed."
+                }
+        
         # Save uploaded files temporarily
         with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as temp_pdf:
-            pdf_content = await pdf_file.read()
             temp_pdf.write(pdf_content)
             temp_pdf_path = temp_pdf.name
             
         with tempfile.NamedTemporaryFile(delete=False, suffix='.xlsx') as temp_excel:
-            excel_content = await excel_file.read()
             temp_excel.write(excel_content)
             temp_excel_path = temp_excel.name
         
@@ -201,6 +229,10 @@ async def validate_values(
                 pdf_filename=pdf_file.filename,
                 excel_filename=excel_file.filename
             )
+            
+            # Store file hashes for future duplicate detection
+            await store_file_hashes(config_id, pdf_hash, excel_hash, pdf_file.filename, excel_file.filename)
+            logger.info(f"Stored file hashes for config_id: {config_id}")
             
             # Generate result file
             result_filename = f"validation_result_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
