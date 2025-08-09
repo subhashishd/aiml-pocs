@@ -1,0 +1,141 @@
+# Kong Configuration for Excel-PDF-Validator Demo/Pilot
+# Basic setup with Google OAuth + Rate Limiting
+_format_version: "3.0"
+
+services:
+  # Main Application Service
+  - name: excel-pdf-app
+    url: http://nginx:8080
+    connect_timeout: 60000
+    read_timeout: 300000
+    write_timeout: 300000
+    retries: 3
+    
+  # Backend API Service
+  - name: excel-pdf-api  
+    url: http://backend:8000
+    connect_timeout: 60000
+    read_timeout: 300000
+    write_timeout: 300000
+    retries: 3
+
+routes:
+  # Public routes (no auth required)
+  - name: public-health
+    service: excel-pdf-api
+    paths:
+      - /health
+      - /docs
+      - /openapi.json
+    strip_path: false
+    preserve_host: true
+    
+  # Landing page (public)
+  - name: public-landing
+    service: excel-pdf-app
+    paths:
+      - /
+    methods:
+      - GET
+    strip_path: false
+    preserve_host: true
+    
+  # Protected application routes (requires auth)
+  - name: protected-app
+    service: excel-pdf-app
+    paths:
+      - /app
+    strip_path: false
+    preserve_host: true
+    
+  # Protected API routes (requires auth)
+  - name: protected-api
+    service: excel-pdf-api
+    paths:
+      - /api
+      - /upload
+      - /validate
+      - /results
+    strip_path: false
+    preserve_host: true
+
+plugins:
+  # Rate Limiting for all routes
+  - name: rate-limiting
+    config:
+      minute: 100
+      hour: 1000
+      day: 10000
+      policy: local
+      hide_client_headers: false
+      
+  # CORS for frontend
+  - name: cors
+    config:
+      origins:
+        - "http://${ORACLE_VM_IP}"
+        - "https://${ORACLE_VM_IP}"
+      methods:
+        - GET
+        - POST
+        - PUT
+        - DELETE
+        - OPTIONS
+      headers:
+        - Accept
+        - Accept-Version
+        - Content-Length
+        - Content-MD5
+        - Content-Type
+        - Date
+        - Authorization
+      exposed_headers:
+        - X-Auth-Token
+      credentials: true
+      max_age: 3600
+
+  # Google OAuth for protected routes
+  - name: oidc
+    route: protected-app
+    config:
+      client_id: ${GOOGLE_CLIENT_ID}
+      client_secret: ${GOOGLE_CLIENT_SECRET}
+      discovery: https://accounts.google.com/.well-known/openid_configuration
+      scope: openid email profile
+      redirect_uri: http://${ORACLE_VM_IP}/app/auth/callback
+      logout_path: /logout
+      realm: excel-pdf-validator
+      session_secret: ${SESSION_SECRET}
+      
+  - name: oidc
+    route: protected-api
+    config:
+      client_id: ${GOOGLE_CLIENT_ID}
+      client_secret: ${GOOGLE_CLIENT_SECRET}
+      discovery: https://accounts.google.com/.well-known/openid_configuration
+      scope: openid email profile
+      redirect_uri: http://${ORACLE_VM_IP}/app/auth/callback
+      logout_path: /logout
+      realm: excel-pdf-validator
+      session_secret: ${SESSION_SECRET}
+
+  # Request size limiting for uploads
+  - name: request-size-limiting
+    route: protected-api
+    config:
+      allowed_payload_size: 52428800  # 50MB
+
+  # IP restriction (optional - for additional security)
+  # Uncomment and configure if needed
+  # - name: ip-restriction
+  #   config:
+  #     allow:
+  #       - 0.0.0.0/0  # Allow all for demo (restrict in production)
+
+consumers: []
+
+# Global plugins
+_global_plugins:
+  - name: prometheus
+    config:
+      per_consumer: false

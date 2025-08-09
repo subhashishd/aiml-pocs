@@ -1,0 +1,167 @@
+# Kong API Gateway Docker Compose Configuration
+# Provides authentication, rate limiting, and security for Excel-PDF-Validator
+version: '3.8'
+
+networks:
+  kong-net:
+    driver: bridge
+  app-net:
+    driver: bridge
+    external: true
+
+volumes:
+  kong-datastore:
+    driver: local
+  kong-config:
+    driver: local
+
+services:
+  #============================================================================
+  # KONG DATABASE (PostgreSQL)
+  #============================================================================
+  kong-database:
+    image: postgres:15-alpine
+    container_name: kong-database
+    environment:
+      POSTGRES_DB: kong
+      POSTGRES_USER: kong
+      POSTGRES_PASSWORD: ${KONG_DB_PASSWORD}
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - kong-datastore:/var/lib/postgresql/data
+    networks:
+      - kong-net
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kong -d kong"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+
+  #============================================================================
+  # KONG MIGRATIONS
+  #============================================================================
+  kong-migrations:
+    image: kong:3.4-alpine
+    container_name: kong-migrations
+    command: kong migrations bootstrap
+    depends_on:
+      kong-database:
+        condition: service_healthy
+    environment:
+      KONG_DATABASE: postgres
+      KONG_PG_HOST: kong-database
+      KONG_PG_DATABASE: kong
+      KONG_PG_USER: kong
+      KONG_PG_PASSWORD: ${KONG_DB_PASSWORD}
+    networks:
+      - kong-net
+    restart: "no"
+
+  #============================================================================
+  # KONG GATEWAY
+  #============================================================================
+  kong:
+    image: kong:3.4-alpine
+    container_name: kong-gateway
+    depends_on:
+      kong-database:
+        condition: service_healthy
+      kong-migrations:
+        condition: service_completed_successfully
+    environment:
+      # Database Configuration
+      KONG_DATABASE: postgres
+      KONG_PG_HOST: kong-database
+      KONG_PG_DATABASE: kong
+      KONG_PG_USER: kong
+      KONG_PG_PASSWORD: ${KONG_DB_PASSWORD}
+      
+      # Network Configuration
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001
+      KONG_PROXY_LISTEN: 0.0.0.0:8000, 0.0.0.0:8443 ssl
+      
+      # Plugin Configuration
+      KONG_PLUGINS: bundled,oidc
+      KONG_PLUGINSERVER_NAMES: oidc
+      
+      # Security Configuration
+      KONG_REAL_IP_HEADER: X-Real-IP
+      KONG_REAL_IP_RECURSIVE: "on"
+      KONG_TRUSTED_IPS: 0.0.0.0/0,::/0
+      
+      # Logging
+      KONG_LOG_LEVEL: info
+    
+    volumes:
+      - kong-config:/etc/kong
+      - ./kong/plugins:/usr/local/share/lua/5.1/kong/plugins
+    
+    networks:
+      - kong-net
+      - app-net
+    
+    ports:
+      # Public ports exposed to Oracle VM
+      - "80:8000"    # HTTP proxy port
+      - "443:8443"   # HTTPS proxy port  
+      - "8001:8001"  # Admin API port
+    
+    healthcheck:
+      test: ["CMD", "kong", "health"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    
+    restart: unless-stopped
+
+  #============================================================================
+  # KONG KONGA (Admin UI - Optional)
+  #============================================================================
+  konga:
+    image: pantsel/konga:latest
+    container_name: kong-admin-ui
+    depends_on:
+      - kong
+    environment:
+      DB_ADAPTER: postgres
+      DB_URI: postgresql://kong:${KONG_DB_PASSWORD}@kong-database:5432/kong
+      NODE_ENV: production
+      KONGA_HOOK_TIMEOUT: 120000
+    networks:
+      - kong-net
+    ports:
+      - "1337:1337"
+    restart: unless-stopped
+
+  #============================================================================
+  # REDIS (for Kong rate limiting and caching)
+  #============================================================================
+  kong-redis:
+    image: redis:7-alpine
+    container_name: kong-redis
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-kongredis}
+    volumes:
+      - kong-redis-data:/data
+    networks:
+      - kong-net
+    ports:
+      - "6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+volumes:
+  kong-redis-data:
+    driver: local
