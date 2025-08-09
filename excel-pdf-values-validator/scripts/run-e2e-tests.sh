@@ -25,7 +25,7 @@ cd "$(dirname "$0")/.."
 
 echo "📦 Building and starting test services..."
 
-# Start all services except cypress
+# Start all services except playwright
 docker-compose -f docker-compose.test.yml up -d --build redis postgres backend celery-worker frontend
 
 echo "⏳ Waiting for services to be healthy..."
@@ -50,8 +50,8 @@ timeout 120 bash -c 'until curl -f http://localhost:3000 >/dev/null 2>&1; do sle
 
 echo "✅ All services are healthy!"
 
-# Run Cypress tests
-echo "🧪 Running Cypress E2E tests..."
-docker-compose -f docker-compose.test.yml --profile testing run --rm cypress
+# Run Playwright tests
+echo "🧪 Running Playwright E2E tests..."
+docker-compose -f docker-compose.test.yml --profile testing run --rm playwright
 
 echo "🎉 E2E tests completed successfully!"

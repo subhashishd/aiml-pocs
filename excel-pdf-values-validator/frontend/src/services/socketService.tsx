@@ -49,96 +49,13 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    // Initialize socket connection
-    const socketUrl = process.env.REACT_APP_SOCKET_URL || 'http://localhost:8000';
+    // Socket service is disabled for now since backend doesn't support WebSocket
+    console.log('WebSocket service disabled - backend does not support socket connections');
+    setIsConnected(false);
+    setSocket(null);
     
-    const newSocket = io(socketUrl, {
-      transports: ['websocket', 'polling'],
-      timeout: 20000,
-      reconnection: true,
-      reconnectionAttempts: 5,
-      reconnectionDelay: 1000,
-      auth: {
-        token: localStorage.getItem('auth_token'),
-      },
-    });
-
-    // Connection event handlers
-    newSocket.on('connect', () => {
-      console.log('Socket connected:', newSocket.id);
-      setIsConnected(true);
-      toast.success('Connected to server', { id: 'socket-connection' });
-    });
-
-    newSocket.on('disconnect', (reason) => {
-      console.log('Socket disconnected:', reason);
-      setIsConnected(false);
-      
-      if (reason === 'io server disconnect') {
-        // Server disconnected - try to reconnect
-        newSocket.connect();
-      }
-      
-      toast.error('Disconnected from server', { id: 'socket-connection' });
-    });
-
-    newSocket.on('connect_error', (error) => {
-      console.error('Socket connection error:', error);
-      setIsConnected(false);
-      toast.error('Connection failed', { id: 'socket-connection' });
-    });
-
-    newSocket.on('reconnect', (attemptNumber) => {
-      console.log('Socket reconnected after', attemptNumber, 'attempts');
-      toast.success('Reconnected to server', { id: 'socket-connection' });
-    });
-
-    newSocket.on('reconnect_error', (error) => {
-      console.error('Socket reconnection error:', error);
-    });
-
-    newSocket.on('reconnect_failed', () => {
-      console.error('Socket reconnection failed');
-      toast.error('Failed to reconnect to server', { id: 'socket-connection' });
-    });
-
-    // Global event handlers for notifications
-    newSocket.on('task:created', (data) => {
-      toast.success(`Task created: ${data.filename}`, {
-        duration: 3000,
-        icon: '📁',
-      });
-    });
-
-    newSocket.on('task:completed', (data) => {
-      toast.success(`Task completed: ${data.taskId}`, {
-        duration: 5000,
-        icon: '✅',
-      });
-    });
-
-    newSocket.on('task:failed', (data) => {
-      toast.error(`Task failed: ${data.error}`, {
-        duration: 5000,
-        icon: '❌',
-      });
-    });
-
-    newSocket.on('system:status', (data) => {
-      if (data.status === 'error') {
-        toast.error(`System issue: ${data.component} - ${data.message}`, {
-          duration: 10000,
-          icon: '⚠️',
-        });
-      }
-    });
-
-    setSocket(newSocket);
-
-    // Cleanup on unmount
-    return () => {
-      newSocket.close();
-    };
+    // Cleanup function (no-op)
+    return () => {};
   }, []);
 
   const subscribe = <K extends keyof SocketEvents>(

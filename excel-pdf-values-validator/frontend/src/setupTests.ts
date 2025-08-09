@@ -6,11 +6,16 @@ global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder as any;
 
 // Mock IntersectionObserver
-global.IntersectionObserver = class IntersectionObserver {
+(global as any).IntersectionObserver = class {
+  root = null;
+  rootMargin = '';
+  thresholds = [];
+  
   constructor() {}
   disconnect() {}
   observe() {}
   unobserve() {}
+  takeRecords() { return []; }
 };
 
 // Mock ResizeObserver

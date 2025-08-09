@@ -271,8 +271,18 @@ class AgentMetrics:
             return ""
 
 
-# Global metrics instance
-metrics = AgentMetrics()
+# Global metrics instance - create lazily to avoid registry conflicts
+_metrics_instance = None
+
+def get_metrics_instance():
+    """Get global metrics instance with lazy initialization."""
+    global _metrics_instance
+    if _metrics_instance is None:
+        _metrics_instance = AgentMetrics()
+    return _metrics_instance
+
+# For backward compatibility
+metrics = None  # Will be initialized when needed
 
 
 class MetricsCollector:

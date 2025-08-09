@@ -54,7 +54,7 @@ fi
 
 echo "📦 Building and starting test services..."
 
-# Start all services except cypress
+# Start all services except playwright
 docker-compose -f docker-compose.test.yml up -d --build redis postgres backend celery-worker frontend
 
 echo "⏳ Waiting for services to be healthy..."
@@ -90,13 +90,13 @@ echo "   Postgres: localhost:5433"
 echo "🔍 Quick API health check..."
 curl -s http://localhost:8000/health | jq '.' 2>/dev/null || echo "API response received"
 
-# Run Cypress tests
-echo "🧪 Running Cypress E2E tests..."
-docker-compose -f docker-compose.test.yml --profile testing run --rm cypress
+# Run Playwright tests
+echo "🧪 Running Playwright E2E tests..."
+docker-compose -f docker-compose.test.yml --profile testing run --rm playwright
 
 echo "🎉 E2E tests completed successfully!"
 echo ""
 echo "📝 Test artifacts:"
-echo "   Videos:      frontend/cypress/videos/"
-echo "   Screenshots: frontend/cypress/screenshots/"
+echo "   Videos:      frontend/test-results/"
+echo "   Screenshots: frontend/test-results/"
 echo "   Logs:        docker-compose -f docker-compose.test.yml logs [service]"

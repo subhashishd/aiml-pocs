@@ -258,6 +258,8 @@ const Dashboard: React.FC = () => {
     () => api.get('/dashboard/stats'),
     {
       refetchInterval: 30000, // Refresh every 30 seconds
+      retry: 0, // Don't retry to prevent duplicate error notifications
+      refetchOnWindowFocus: false,
     }
   );
 
@@ -266,6 +268,8 @@ const Dashboard: React.FC = () => {
     () => api.get('/tasks/recent?limit=5'),
     {
       refetchInterval: 30000,
+      retry: 0, // Don't retry to prevent duplicate error notifications
+      refetchOnWindowFocus: false,
     }
   );
 

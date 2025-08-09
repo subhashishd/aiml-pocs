@@ -6,9 +6,10 @@ This document describes the complete End-to-End (E2E) integration testing setup 
 
 The E2E testing setup includes:
 - **Docker Compose** environment with full backend + frontend stack
-- **Cypress** for browser automation and testing
+- **Playwright** for multi-browser automation and testing
 - **Real API integration** testing with backend services
 - **Comprehensive test scenarios** covering user workflows
+- **Cross-browser compatibility** testing
 - **CI/CD ready** configuration
 
 ## Architecture
@@ -16,9 +17,9 @@ The E2E testing setup includes:
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │                 │    │                 │    │                 │
-│   Cypress E2E   │────│  React Frontend │────│  FastAPI Backend│
+│  Playwright E2E │────│  React Frontend │────│  FastAPI Backend│
 │   Test Runner   │    │                 │    │                 │
-│                 │    │                 │    │                 │
+│ (Multi-browser) │    │                 │    │                 │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
                                 │                        │
                                 └─────────────────┬──────┘
@@ -42,14 +43,11 @@ project/
 │   ├── run-e2e-tests.sh            # Automated E2E test runner
 │   └── start-test-env.sh            # Manual testing environment
 ├── frontend/
-│   ├── cypress.config.cjs           # Cypress configuration
-│   ├── cypress/
-│   │   ├── integration/
-│   │   │   ├── sample_spec.js       # Original navigation tests
-│   │   │   └── full_integration_spec.js  # Full stack integration tests
-│   │   ├── support/
-│   │   │   ├── e2e.js               # Global setup and commands
-│   │   │   └── commands.js          # Custom Cypress commands
+│   ├── playwright.config.cjs        # Playwright configuration
+│   ├── tests/
+│   │   ├── e2e/
+│   │   │   ├── navigation.spec.js   # Navigation tests
+│   │   │   └── integration.spec.js  # Full stack integration tests
 │   │   └── fixtures/
 │   │       ├── sample.pdf           # Test PDF file
 │   │       └── api-responses.json   # Mock API responses
@@ -76,7 +74,7 @@ docker-compose --version
 This script will:
 - Start all required services (PostgreSQL, Redis, Backend, Frontend)
 - Wait for services to be healthy
-- Run Cypress tests in headless mode
+- Run Playwright tests in headless mode
 - Clean up containers after completion
 
 ### 3. Start Test Environment (Manual)
@@ -85,7 +83,7 @@ This script will:
 # Start services for manual testing
 ./scripts/start-test-env.sh
 
-# Then in another terminal, run Cypress UI
+# Then in another terminal, run Playwright UI
 cd frontend
 npm run test:e2e
 ```
@@ -95,10 +93,10 @@ npm run test:e2e
 From the frontend directory:
 
 ```bash
-# Start Cypress interactive mode
+# Start Playwright interactive mode
 npm run test:e2e
 
-# Run Cypress tests headlessly  
+# Run Playwright tests headlessly  
 npm run test:e2e:headless
 
 # Run full Docker E2E tests
@@ -161,9 +159,9 @@ The test environment uses separate containers and ports to avoid conflicts:
 Key environment variables for testing:
 
 ```bash
-# Cypress
-CYPRESS_baseUrl=http://frontend:3000
-CYPRESS_apiUrl=http://backend:8000
+# Playwright
+PLAYWRIGHT_baseUrl=http://frontend:3000
+PLAYWRIGHT_apiUrl=http://backend:8000
 
 # Backend
 DATABASE_URL=postgresql://postgres:postgres@postgres:5432/validation_agents_test
@@ -198,29 +196,31 @@ jobs:
         uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: cypress-results
-          path: frontend/cypress/videos/
+          name: playwright-results
+          path: frontend/test-results/
 ```
 
-## Custom Cypress Commands
+## Custom Playwright Helpers
 
-The setup includes several custom commands:
+The setup includes several custom page object helpers:
 
 ```javascript
 // File upload simulation
-cy.uploadFile('sample.pdf', 'application/pdf');
+await page.uploadFile('input[type=file]', 'sample.pdf');
 
 // API health check
-cy.checkApiHealth();
+await page.apiHealthCheck();
 
 // Wait for app to load
-cy.waitForAppLoad();
+await page.waitForAppLoad();
 
 // Clear application data
-cy.clearAllData();
+await page.clearAllData();
 
-// Network request stubbing
-cy.stubApiCall('GET', '/api/tasks', mockResponse);
+// Network request mocking
+await page.route('/api/tasks', route => route.fulfill({
+  body: JSON.stringify(mockResponse)
+}));
 ```
 
 ## Troubleshooting
@@ -237,9 +237,9 @@ cy.stubApiCall('GET', '/api/tasks', mockResponse);
    lsof -i :3000
    ```
 
-3. **Cypress tests timing out**: Increase timeout in cypress.config.cjs
+3. **Playwright tests timing out**: Increase timeout in playwright.config.cjs
    ```javascript
-   defaultCommandTimeout: 15000
+   timeout: 30000
    ```
 
 4. **Backend not healthy**: Check backend logs
@@ -276,14 +276,14 @@ docker-compose -f docker-compose.test.yml down --volumes --remove-orphans
 
 To add new test scenarios:
 
-1. Create new spec files in `cypress/integration/`
-2. Add fixtures in `cypress/fixtures/`
-3. Create custom commands in `cypress/support/commands.js`
-4. Update API mocks in `cypress/fixtures/api-responses.json`
+1. Create new spec files in `tests/e2e/`
+2. Add fixtures in `tests/fixtures/`
+3. Create page objects in `tests/page-objects/`
+4. Update API mocks in `tests/fixtures/api-responses.json`
 
 ## Monitoring and Reporting
 
-- Cypress Dashboard integration for test results
+- Playwright HTML reporter for test results
 - Video recording of failed tests
 - Screenshot capture on failures
 - Performance metrics collection

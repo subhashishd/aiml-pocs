@@ -58,9 +58,17 @@ apiClient.interceptors.response.use(
         case 403:
           toast.error('Access denied');
           break;
-        case 404:
-          toast.error('Resource not found');
+        case 404: {
+          // Only show toast for actual user-initiated requests, not background checks
+          const url = error.config?.url || '';
+          const suppressedEndpoints = ['/system/', '/dashboard/', '/tasks/', '/auth/', '/results/'];
+          const shouldSuppressToast = suppressedEndpoints.some(endpoint => url.includes(endpoint));
+          
+          if (!shouldSuppressToast) {
+            toast.error('Resource not found');
+          }
           break;
+        }
         case 422:
           // Validation errors
           if (error.response.data?.errors) {
@@ -88,8 +96,14 @@ apiClient.interceptors.response.use(
         data: error.response.data,
       });
     } else if (error.request) {
-      // Network error
-      toast.error('Network error. Please check your connection.');
+      // Network error - only show for user-initiated requests
+      const url = error.config?.url || '';
+      const suppressedEndpoints = ['/system/', '/dashboard/', '/tasks/', '/auth/', '/results/'];
+      const shouldSuppressToast = suppressedEndpoints.some(endpoint => url.includes(endpoint));
+      
+      if (!shouldSuppressToast) {
+        toast.error('Network error. Please check your connection.');
+      }
       return Promise.reject({
         status: 0,
         message: 'Network error',
@@ -245,13 +259,36 @@ export const apiEndpoints = {
   // System endpoints
   system: {
     getHealth: () =>
-      api.get('/system/health'),
+      api.get('/health'),
 
-    getStatus: () =>
-      api.get('/system/status'),
+    getMemoryStats: () =>
+      api.get('/memory-stats'),
+  },
 
-    getMetrics: () =>
-      api.get('/system/metrics'),
+  // Validation endpoints
+  validation: {
+    validateFiles: (pdfFile: File, excelFile: File) => {
+      const formData = new FormData();
+      formData.append('pdf_file', pdfFile);
+      formData.append('excel_file', excelFile);
+      
+      return apiClient.post('/validate', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+    },
+
+    createEmbeddings: (pdfFile: File) => {
+      const formData = new FormData();
+      formData.append('pdf_file', pdfFile);
+      
+      return apiClient.post('/create-embeddings', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+    },
   },
 };
 

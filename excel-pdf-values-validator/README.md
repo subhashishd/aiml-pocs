@@ -86,9 +86,30 @@ CREATE TABLE pdf_chunks (
 
 ## Testing
 
-- Comprehensive test suite available in the `tests` directory.
-- Includes unit tests for core components and integration tests for the end-to-end workflow.
-- Local and Docker-based testing options ensure reliability in both environments.
+The project includes comprehensive testing across multiple levels:
+
+### **Backend Tests**
+- **Unit Tests**: Core service and utility function testing
+- **Integration Tests**: End-to-end API workflow testing
+- **Model Tests**: ML model inference validation
+
+### **Frontend Tests**  
+- **Unit Tests**: Component and utility testing with Jest
+- **E2E Tests**: Full user workflow testing with Playwright
+- **Cross-browser Testing**: Chrome, Firefox, and Safari compatibility
+
+### **Running Tests**
+```bash
+# Backend tests
+cd fastapi
+python -m pytest tests/
+
+# Frontend tests
+cd frontend
+npm run test              # Jest unit tests
+npm run test:e2e         # Playwright E2E tests
+npm run test:all         # All tests combined
+```
 
 ## Future Enhancements
 
@@ -110,13 +131,19 @@ CREATE TABLE pdf_chunks (
    ```
 
 3. **Access the Application**:
-   - UI available at `http://localhost:8000`
-   - API documentation at `http://localhost:8000/docs`
+   - Frontend: `http://localhost:3000` (when available)
+   - API: `http://localhost:8000`
+   - API documentation: `http://localhost:8000/docs`
 
 4. **Run Tests**:
    ```bash
-   cd tests
-   python run_tests.py
+   # Backend tests
+   cd fastapi
+   python -m pytest tests/
+   
+   # Frontend tests (when available)
+   cd frontend
+   npm run test:all
    ```
 
 ## Contributions
@@ -125,4 +152,7 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 
 ---
 
-For more detailed documentation and setup instructions, please refer to the `docs/` directory or the online documentation at [Project Documentation](<document-link>).
+For more detailed documentation and setup instructions, please refer to:
+- **[Project Specification](PROJECT_SPECIFICATION.md)**: Complete technical specification
+- **[E2E Testing Guide](E2E_TESTING.md)**: End-to-end testing documentation  
+- **API Documentation**: Available at `http://localhost:8000/docs` when running

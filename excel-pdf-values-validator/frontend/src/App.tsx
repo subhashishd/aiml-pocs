@@ -26,7 +26,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      retry: 1,
+      retry: 0, // Disable retries to prevent duplicate error notifications
       staleTime: 30000,
     },
   },

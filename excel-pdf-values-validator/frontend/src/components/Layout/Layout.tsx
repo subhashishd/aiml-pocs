@@ -18,7 +18,7 @@ const LayoutContainer = styled.div`
 `;
 
 const Sidebar = styled.aside.withConfig({
-  shouldForwardProp: (prop) => prop !== 'isOpen',
+  shouldForwardProp: (prop: string | number) => prop !== 'isOpen',
 })<{ isOpen: boolean }>`
   width: ${({ isOpen }) => (isOpen ? '250px' : '70px')};
   background-color: ${({ theme }) => theme.colors.gray[800]};
@@ -40,7 +40,7 @@ const Sidebar = styled.aside.withConfig({
 `;
 
 const SidebarHeader = styled.div.withConfig({
-  shouldForwardProp: (prop) => prop !== 'isOpen',
+  shouldForwardProp: (prop: string | number) => prop !== 'isOpen',
 })<{ isOpen: boolean }>`
   padding: 1rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[700]};
@@ -51,7 +51,7 @@ const SidebarHeader = styled.div.withConfig({
 `;
 
 const Logo = styled.h1.withConfig({
-  shouldForwardProp: (prop) => prop !== 'isOpen',
+  shouldForwardProp: (prop: string | number) => prop !== 'isOpen',
 })<{ isOpen: boolean }>`
   color: ${({ theme }) => theme.colors.primary[400]};
   font-size: 1.25rem;
@@ -89,7 +89,7 @@ const Navigation = styled.nav`
 `;
 
 const NavItem = styled(NavLink).withConfig({
-  shouldForwardProp: (prop) => prop !== 'isOpen',
+  shouldForwardProp: (prop: string | number) => prop !== 'isOpen',
 })<{ isOpen: boolean }>`
   display: flex;
   align-items: center;
@@ -123,7 +123,7 @@ const NavItem = styled(NavLink).withConfig({
 `;
 
 const MainContent = styled.main.withConfig({
-  shouldForwardProp: (prop) => prop !== 'sidebarOpen',
+  shouldForwardProp: (prop: string | number) => prop !== 'sidebarOpen',
 })<{ sidebarOpen: boolean }>`
   flex: 1;
   display: flex;
@@ -181,7 +181,7 @@ const ContentArea = styled.div`
 `;
 
 const Overlay = styled.div.withConfig({
-  shouldForwardProp: (prop) => prop !== 'show',
+  shouldForwardProp: (prop: string | number) => prop !== 'show',
 })<{ show: boolean }>`
   display: ${({ show }) => (show ? 'block' : 'none')};
   position: fixed;
