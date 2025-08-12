@@ -18,11 +18,11 @@ def test_pdf_processing():
     print("Testing PDF processing...")
     
     pdf_processor = PDFProcessor()
-    pdf_path = os.path.join(os.path.dirname(__file__), "..", "..", "files", "BunkerDeliveryNote-1.16.3.PDF")
+    pdf_path = os.path.join(os.path.dirname(__file__), "..", "..", "files", "sample_generic_parameters.pdf")
     
     assert os.path.exists(pdf_path), f"PDF file not found: {pdf_path}"
     
-    chunks = pdf_processor.process_pdf(pdf_path, "BunkerDeliveryNote-1.16.3.PDF")
+    chunks = pdf_processor.process_pdf(pdf_path, "sample_generic_parameters.pdf")
     print(f"✓ PDF processing successful: {len(chunks)} chunks extracted")
     
     # Show first few chunks

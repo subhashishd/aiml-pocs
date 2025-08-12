@@ -3,7 +3,7 @@ const { test, expect } = require('@playwright/test');
 const path = require('path');
 
 test.describe('Validation Workflow Tests', () => {
-  const pdfFile = path.join(__dirname, 'fixtures', 'BunkerDeliveryNote-1.16.3.PDF');
+  const pdfFile = path.join(__dirname, 'fixtures', 'sample_generic_parameters.pdf');
   const excelFile = path.join(__dirname, 'fixtures', 'output_parameters.xlsx');
   const comprehensiveExcelFile = path.join(__dirname, 'fixtures', 'comprehensive_parameters.xlsx');
 
@@ -194,7 +194,7 @@ test.describe('Validation Workflow Tests', () => {
     await excelInput.setInputFiles(excelFile);
     
     // Verify files are selected
-    const pdfFileName = page.locator('text=/BunkerDeliveryNote.*PDF/i').first();
+    const pdfFileName = page.locator('text=/sample_generic_parameters.*pdf/i').first();
     const excelFileName = page.locator('text=/output_parameters.*xlsx/i').first();
     
     // Files should be visible in UI

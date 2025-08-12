@@ -3,7 +3,7 @@ const { test, expect } = require('@playwright/test');
 const path = require('path');
 
 test.describe('Backend API Workflow Tests', () => {
-  const pdfFile = path.join(__dirname, 'fixtures', 'BunkerDeliveryNote-1.16.3.PDF');
+  const pdfFile = path.join(__dirname, 'fixtures', 'sample_generic_parameters.pdf');
   const excelFile = path.join(__dirname, 'fixtures', 'output_parameters.xlsx');
   const comprehensiveExcelFile = path.join(__dirname, 'fixtures', 'comprehensive_parameters.xlsx');
 
@@ -19,14 +19,14 @@ test.describe('Backend API Workflow Tests', () => {
     const pdfBuffer = fs.readFileSync(pdfFile);
     const excelBuffer = fs.readFileSync(excelFile);
     
-    formData.append('pdf_file', new Blob([pdfBuffer], { type: 'application/pdf' }), 'BunkerDeliveryNote-1.16.3.PDF');
+    formData.append('pdf_file', new Blob([pdfBuffer], { type: 'application/pdf' }), 'sample_generic_parameters.pdf');
     formData.append('excel_file', new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), 'output_parameters.xlsx');
     
     // Send validation request
     const response = await request.post('http://localhost:8000/validate', {
       multipart: {
         pdf_file: {
-          name: 'BunkerDeliveryNote-1.16.3.PDF',
+          name: 'sample_generic_parameters.pdf',
           mimeType: 'application/pdf',
           buffer: pdfBuffer,
         },
@@ -91,7 +91,7 @@ test.describe('Backend API Workflow Tests', () => {
     const firstResponse = await request.post('http://localhost:8000/validate', {
       multipart: {
         pdf_file: {
-          name: 'BunkerDeliveryNote-1.16.3.PDF',
+          name: 'sample_generic_parameters.pdf',
           mimeType: 'application/pdf',
           buffer: pdfBuffer,
         },
@@ -112,7 +112,7 @@ test.describe('Backend API Workflow Tests', () => {
     const secondResponse = await request.post('http://localhost:8000/validate', {
       multipart: {
         pdf_file: {
-          name: 'BunkerDeliveryNote-1.16.3.PDF',
+          name: 'sample_generic_parameters.pdf',
           mimeType: 'application/pdf',
           buffer: pdfBuffer,
         },
@@ -178,7 +178,7 @@ test.describe('Backend API Workflow Tests', () => {
     const response = await request.post('http://localhost:8000/validate', {
       multipart: {
         pdf_file: {
-          name: 'BunkerDeliveryNote-1.16.3.PDF',
+          name: 'sample_generic_parameters.pdf',
           mimeType: 'application/pdf',
           buffer: pdfBuffer,
         },

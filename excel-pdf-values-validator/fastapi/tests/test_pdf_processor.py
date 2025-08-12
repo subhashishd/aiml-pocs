@@ -10,7 +10,7 @@ from services.pdf_processor import PDFProcessor
 class TestPDFProcessor(unittest.TestCase):
     def setUp(self):
         self.pdf_processor = PDFProcessor()
-        self.sample_pdf_path = os.path.join(os.path.dirname(__file__), '..', '..', 'files', 'BunkerDeliveryNote-1.16.3.PDF')
+        self.sample_pdf_path = os.path.join(os.path.dirname(__file__), '..', '..', 'files', 'sample_generic_parameters.pdf')
         
     def test_pdf_exists(self):
         """Test that the sample PDF file exists"""

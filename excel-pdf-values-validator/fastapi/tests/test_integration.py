@@ -38,7 +38,7 @@ class TestIntegration(unittest.TestCase):
         self.excel_processor = ExcelProcessor()
         self.validation_service = ValidationService()
         
-        self.sample_pdf_path = os.path.join(os.path.dirname(__file__), '..', '..', 'files', 'BunkerDeliveryNote-1.16.3.PDF')
+        self.sample_pdf_path = os.path.join(os.path.dirname(__file__), '..', '..', 'files', 'sample_generic_parameters.pdf')
         self.sample_excel_path = os.path.join(os.path.dirname(__file__), '..', '..', 'files', 'output_parameters.xlsx')
     
     def test_end_to_end_workflow(self):

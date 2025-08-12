@@ -13,7 +13,7 @@ async function globalSetup() {
   const fixturesDir = path.join(__dirname, 'fixtures');
   const requiredFixtures = [
     'output_parameters.xlsx',
-    'BunkerDeliveryNote-1.16.3.PDF'
+    'sample_generic_parameters.pdf'
   ];
 
   if (!fs.existsSync(fixturesDir)) {
