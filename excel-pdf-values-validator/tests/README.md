@@ -48,7 +48,7 @@ python -m unittest test_integration.TestIntegration.test_end_to_end_workflow
 ## Test Data
 
 Tests use sample files from the `../files/` directory:
-- `BunkerDeliveryNote-1.16.3.PDF` - Sample PDF with parameter-value tables
+- `sample_generic_parameters.pdf` - Sample PDF with generic parameter-value tables
 - `output_parameters.xlsx` - Sample Excel file with validation parameters
 
 ## Test Coverage
