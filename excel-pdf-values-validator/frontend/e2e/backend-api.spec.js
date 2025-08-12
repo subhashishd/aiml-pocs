@@ -231,7 +231,7 @@ test.describe('Backend API Workflow Tests', () => {
     const firstResponse = await request.post('http://localhost:8000/validate', {
       multipart: {
         pdf_file: {
-          name: 'BunkerDeliveryNote-1.16.3.PDF',
+          name: 'sample_generic_parameters.pdf',
           mimeType: 'application/pdf',
           buffer: pdfBuffer,
         },
@@ -253,7 +253,7 @@ test.describe('Backend API Workflow Tests', () => {
     const secondResponse = await request.post('http://localhost:8000/validate', {
       multipart: {
         pdf_file: {
-          name: 'BunkerDeliveryNote-1.16.3.PDF',
+          name: 'sample_generic_parameters.pdf',
           mimeType: 'application/pdf',
           buffer: pdfBuffer,
         },
